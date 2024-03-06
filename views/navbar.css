@@ -3,6 +3,7 @@
 .nav-bar{
     width: var(--nav-size);
     height: 100%;
+    position: fixed;
     background-color: var(--color-primary);
     display: flex;
     flex-direction: column;
@@ -52,10 +53,12 @@
         flex-direction: row;
         padding: 0em 0.5em;
         align-items:flex-end;
+        min-width: fit-content;
+        min-height: fit-content;
     }
     .nav-bar li{
         display: inline;
-        margin: 0 0.5em;
+        margin: 0 0.25em;
     }
     .space-filler{
         flex-grow: 1;

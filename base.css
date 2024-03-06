@@ -26,6 +26,10 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--background-color);
+    
+    /* Default is 16px */
+    /* Effectively zooming in */
+    font-size: calc(16px * 1.25);
 }
 
 /* Main content */
@@ -41,6 +45,6 @@ body {
     } */
     :root {
         /* Spacing */
-        --nav-size: 7.5vh;
+        --nav-size: 7vh;
     }
 }

@@ -4,14 +4,18 @@
     height: 100vh;
 }
 
-main{
-    /* border: 4px solid red; */
+.main{
+    margin-left: var(--nav-size);
     flex-grow: 1;
 }
 
 @media screen and (orientation: portrait) {
     .root-flex-container{
         flex-direction: column;
+    }
+    .main{
+        margin-left: 0;
+        margin-top: var(--nav-size);
     }
 }
 
