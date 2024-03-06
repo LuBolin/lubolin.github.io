@@ -13,7 +13,6 @@ loadContentByHash(window.location.hash);
 
 
 
-
 // Re-load content when URL hash changes
 window.addEventListener('hashchange', () => {
 loadContentByHash(window.location.hash);
@@ -34,6 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+// updateActiveNavLink is defined in navbar.js
 
 // Function to load content based on # value in url
 function loadContentByHash(hash) {
@@ -58,17 +59,5 @@ function loadContentByHash(hash) {
         // assign acts similar to a href redirect
         // I rather use this than replace
         window.location.assign(currentLocationWithoutParams);
-    });
-}
-
-// Function to update the active nav link based on the current hash
-function updateActiveNavLink(hash) {
-    const navLinks = document.querySelectorAll('#navbar a'); // Select all nav links
-    navLinks.forEach(link => {
-      if (link.getAttribute('href') === hash) {
-        link.classList.add('nav-active'); // Add active class if hash matches
-      } else {
-        link.classList.remove('nav-active'); // Remove active class from other links
-      }
     });
 }
