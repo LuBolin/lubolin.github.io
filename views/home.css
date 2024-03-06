@@ -11,3 +11,11 @@
     object-fit: cover; /* Cover the container, allowing parts of the image to be cropped */
     object-position: center; /* Center the image to ensure best parts are visible */
 }
+
+@media screen and (orientation: portrait) {
+    .photo-of-self {
+        width: 120%;
+        height: auto;
+        margin-left: -10%;
+    }
+}

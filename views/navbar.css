@@ -12,7 +12,7 @@
 }
 
 .nav-bar * {
-    color: var(--color-neutral);
+    color: var(--text-color);
 }
 
 .nav-bar li{

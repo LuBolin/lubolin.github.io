@@ -8,10 +8,15 @@
 /* Constants */
 :root {
     /* Colors */
-    --color-primary: #43766C;
+    /* --color-primary: #43766C;
     --color-secondary: #76453B;
     --color-neutral: #F8FAE5;
-    --color-accent: #B19470;
+    --color-accent: #B19470; */
+    --color-primary: #D6CC99;
+    --color-neutral: #FDE5D4;
+    --color-secondary: #001524;
+    --color-accent: #445D48;
+    
 
     --text-color: var(--color-secondary);
 
