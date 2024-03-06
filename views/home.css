@@ -1,7 +1,13 @@
-.home-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 50px;
+.home-container {
+    position: relative;
+    width: 100%; /* Ensures the container fills its parent's width */
+    height: 100%; /* Adjust the height as necessary */
+    overflow: hidden; /* Hides any overflow from the image */
+}
+
+.photo-of-self {
+    width: 100%; /* Ensure the image at least fills the width */
+    height: 100%; /* Ensure the image at least fills the height */
+    object-fit: cover; /* Cover the container, allowing parts of the image to be cropped */
+    object-position: center; /* Center the image to ensure best parts are visible */
 }
