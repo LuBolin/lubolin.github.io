@@ -1,6 +1,8 @@
-Hi, I'm Bloin. This is my website.
+# Hi, I'm Bloin. This is my website.
+
 https://lubolin.github.io/
 
 
-Also checkout my friend Bacen! He draws cool stuff.
+
+### Also checkout my friend Bacen! He draws cool stuff.
 https://bacenl.github.io/index.html
