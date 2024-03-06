@@ -1,0 +1,76 @@
+@import '../base.css';
+
+.nav-bar{
+    width: var(--nav-size);
+    height: 100%;
+    background-color: var(--color-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    padding: 1em 2em;
+}
+
+.nav-bar * {
+    color: var(--color-neutral);
+}
+
+.nav-bar li{
+    list-style-position: inside;
+}
+
+.nav-bar a{
+    text-decoration: none;
+}
+
+.space-filler{
+    height: 2em;
+}
+.space-filler2{
+    flex-grow: 1;
+}
+
+.pronunce-icon{
+    text-shadow: 0;
+    transition: text-shadow 0.1s;
+}
+
+.pronunce-icon:hover{
+    text-shadow: 1px 1px 3px black;
+}
+
+/* active link */
+.nav-active {
+    font-weight: bold;
+    text-shadow: 1px 1px 1px black;
+}
+
+/* orientation's breakpoint is at square */
+@media screen and (orientation: portrait) {
+    .nav-bar{
+        width: 100%;
+        height: var(--nav-size);
+        flex-direction: row;
+        padding: 0em 0.5em;
+        align-items:flex-end;
+    }
+    .nav-bar li{
+        display: inline;
+        margin: 0 0.5em;
+    }
+    .space-filler{
+        flex-grow: 1;
+    }
+    .space-filler2{
+        display: none;
+    }
+    .quote{
+        display: none;
+    }
+    .pronunciation{
+        display: none;
+    }
+}
+
+.nav-bar a:hover {
+    text-decoration: underline;
+}

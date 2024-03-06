@@ -1,0 +1,46 @@
+/* Reset some basic elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Constants */
+:root {
+    /* Colors */
+    --color-primary: #43766C;
+    --color-secondary: #76453B;
+    --color-neutral: #F8FAE5;
+    --color-accent: #B19470;
+
+    --text-color: var(--color-secondary);
+
+    --background-color: var(--color-neutral);
+
+    /* Spacing */
+    --nav-size: 25vw;
+}
+
+body {
+    font-family: Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+/* Main content */
+/* main {
+    padding-left: var(--nav-size);
+} */
+
+/* 1em = 16px */
+/* orientation's breakpoint is at square */
+@media screen and (orientation: portrait) {
+    /* main {
+        padding-top: var(--nav-size);
+    } */
+    :root {
+        /* Spacing */
+        --nav-size: 7.5vh;
+    }
+}

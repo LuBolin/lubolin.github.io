@@ -1,0 +1,27 @@
+<!-- ./views as this is loaded after being imported by index -->
+<link rel="stylesheet" href="./views/navbar.css">
+
+<!-- Font Awesome icons for audio icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+<nav class="nav-bar">
+    <h1 class=><a href="#home">Bloin</a></h1>
+    <div class="pronunciation">
+        <small>Pronunciation:</small>
+        <i onclick="document.getElementById('pronunce-Bloin').play()" 
+            class="fa-solid fa-headphones pronunce-icon"></i>
+        <audio id="pronunce-Bloin" src="./assets/audios/Bloin.mp3" type="audio/mp3"></audio>
+    </div>
+    <div class="space-filler"></div>
+    <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="space-filler2"></div>
+    <h6 class="quote"><em>
+        "No man needs a vacation so much 
+        as the man who has just had one."
+        -- Elbert Hubbard
+    </em></h6>
+</nav>
