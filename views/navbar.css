@@ -28,10 +28,10 @@
     text-decoration: none;
 }
 
-.space-filler{
+.nav-bar .space-filler{
     height: 2em;
 }
-.space-filler2{
+.nav-bar .space-filler2{
     flex-grow: 1;
 }
 
@@ -66,10 +66,10 @@
         display: inline;
         margin: 0 0.25em;
     }
-    .space-filler{
+    .nav-bar .space-filler{
         flex-grow: 1;
     }
-    .space-filler2{
+    .nav-bar .space-filler2{
         display: none;
     }
     .quote{
