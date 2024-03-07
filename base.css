@@ -12,23 +12,48 @@
     --color-secondary: #43766C;
     --color-neutral: #F8FAE5;
     --color-accent: #B19470;
+    
+    /* Previous colors */
     /* --color-accent: #B19470; */
     /* --color-primary: #001524;
     --color-neutral: #FDE5D4;
     --color-secondary: #72a079; */
-    
 
     --text-color: var(--color-primary);
     --text-color-alt: var(--color-neutral);
 
     --background-color: var(--color-neutral);
 
+
+
+    
     /* Spacing */
-    --nav-size: 25vw;
+    /* --nav-size: 25vw; */
+    --nav-size: max(25vw, 7.5em);
+}
+
+@font-face{
+    font-family:d-din;
+    font-style:normal; font-weight:400;
+    src:local('D-DIN'),
+    url(https://fonts.cdnfonts.com/s/23112/D-DIN.woff)  format('woff')
+}
+@font-face{
+    font-family:d-din;
+    font-style:italic; font-weight:400;
+    src:local('D-DIN'),
+    url(https://fonts.cdnfonts.com/s/23112/D-DIN-Italic.woff) format('woff')
+}
+@font-face{
+    font-family:d-din;
+    font-style:normal; font-weight:700;
+    src:local('D-DIN'),
+    url(https://fonts.cdnfonts.com/s/23112/D-DIN-Bold.woff) format('woff')
 }
 
 body {
-    font-family: Verdana, sans-serif;
+    font-family: 'D-DIN', Verdana, sans-serif;
+
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--background-color);
@@ -38,7 +63,7 @@ body {
     font-size: calc(16px * 1.25);
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 720px) {
     body {
         font-size: 16px;
     }
@@ -51,6 +76,6 @@ body {
     } */
     :root {
         /* Spacing */
-        --nav-size: 7vh;
+        --nav-size: 2.5em;
     }
 }

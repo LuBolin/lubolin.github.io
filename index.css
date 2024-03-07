@@ -13,8 +13,9 @@ main > div{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     min-height: 100%;
+    justify-content: flex-start;
+    padding-top: 1em;
 }
 
 @media screen and (orientation: portrait) {
@@ -27,6 +28,7 @@ main > div{
     }
 }
 
+/* Potential dark mode */
 /* @media (prefers-color-scheme: dark) {
     body{
         filter: invert(95%) hue-rotate(180deg);

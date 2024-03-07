@@ -12,7 +12,6 @@
 }
 
 .nav-bar * {
-    /* color: var(--color-neutral); */
     color: var(--text-color-alt);
 }
 
@@ -24,10 +23,15 @@
     text-decoration: none;
 }
 
+.nav-bar a:hover {
+    text-decoration: underline;
+}
+
 /* h1 Name/Title should not have underlining*/
 .nav-bar h1 a:hover {
     text-decoration: none;
 }
+
 
 .nav-bar .space-filler{
     height: 2em;
@@ -49,6 +53,13 @@
 .nav-active {
     font-weight: bold;
     text-shadow: 1px 1px 1px black;
+}
+
+/* when too narrow, side bar shd have less padding */
+@media screen and (max-width: 720px) {
+    .nav-bar{
+        padding: 0.5em 1em;
+    }
 }
 
 /* orientation's breakpoint is at square */
@@ -79,8 +90,4 @@
     .pronunciation{
         display: none;
     }
-}
-
-.nav-bar a:hover {
-    text-decoration: underline;
 }
