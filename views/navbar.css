@@ -4,7 +4,7 @@
     width: var(--nav-size);
     height: 100%;
     position: fixed;
-    background-color: var(--color-primary);
+    background-color: var(--color-secondary);
     display: flex;
     flex-direction: column;
     align-items: baseline;
@@ -12,7 +12,8 @@
 }
 
 .nav-bar * {
-    color: var(--text-color);
+    /* color: var(--color-neutral); */
+    color: var(--text-color-alt);
 }
 
 .nav-bar li{

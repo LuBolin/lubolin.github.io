@@ -1,8 +1,9 @@
 .home-container {
     position: relative;
-    width: 100%; /* Ensures the container fills its parent's width */
-    height: 100%; /* Adjust the height as necessary */
-    overflow: hidden; /* Hides any overflow from the image */
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    justify-content: start;
 }
 
 .photo-of-self {
@@ -14,8 +15,8 @@
 
 @media screen and (orientation: portrait) {
     .photo-of-self {
-        width: 120%;
+        width: 130%;
         height: auto;
-        margin-left: -10%;
+        margin-left: -15%;
     }
 }

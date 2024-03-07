@@ -9,6 +9,14 @@
     flex-grow: 1;
 }
 
+main > div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+}
+
 @media screen and (orientation: portrait) {
     .root-flex-container{
         flex-direction: column;

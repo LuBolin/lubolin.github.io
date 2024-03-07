@@ -1,15 +1,6 @@
-.contact-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100%;
-}
-
-
 .contact-container a{
     text-decoration: none;
-    color: var(--color-secondary);
+    color: var(--text-color);
 }
 
 .contact-container a:hover {

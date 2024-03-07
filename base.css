@@ -8,17 +8,18 @@
 /* Constants */
 :root {
     /* Colors */
-    /* --color-primary: #43766C;
-    --color-secondary: #76453B;
+    --color-primary: #76453b;
+    --color-secondary: #43766C;
     --color-neutral: #F8FAE5;
-    --color-accent: #B19470; */
-    --color-primary: #D6CC99;
+    --color-accent: #B19470;
+    /* --color-accent: #B19470; */
+    /* --color-primary: #001524;
     --color-neutral: #FDE5D4;
-    --color-secondary: #001524;
-    --color-accent: #445D48;
+    --color-secondary: #72a079; */
     
 
-    --text-color: var(--color-secondary);
+    --text-color: var(--color-primary);
+    --text-color-alt: var(--color-neutral);
 
     --background-color: var(--color-neutral);
 
@@ -37,12 +38,12 @@ body {
     font-size: calc(16px * 1.33);
 }
 
-/* Main content */
-/* main {
-    padding-left: var(--nav-size);
-} */
+@media screen and (max-width: 800px) {
+    body {
+        font-size: 16px;
+    }
+}
 
-/* 1em = 16px */
 /* orientation's breakpoint is at square */
 @media screen and (orientation: portrait) {
     /* main {
