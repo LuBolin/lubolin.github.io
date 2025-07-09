@@ -12,6 +12,7 @@
     --color-secondary: #43766C;
     --color-neutral: #F8FAE5;
     --color-accent: #B19470;
+    --color-bright: #f5f5f5;
     
     /* Previous colors */
     /* --color-accent: #B19470; */
@@ -24,12 +25,14 @@
 
     --background-color: var(--color-neutral);
 
+    --text-background-color: var(--color-bright);
 
 
-    
+
     /* Spacing */
     /* --nav-size: 25vw; */
     --nav-size: max(25vw, 7.5em);
+    --font-size: 1.25em;
 }
 
 @font-face{
@@ -60,12 +63,12 @@ body {
     
     /* Default is 16px */
     /* Effectively zooming in */
-    font-size: calc(16px * 1.25);
+    font-size: var(--font-size);
 }
 
 @media screen and (max-width: 720px) {
     body {
-        font-size: 16px;
+        font-size: var(--font-size);
     }
 }
 
@@ -78,4 +81,80 @@ body {
         /* Spacing */
         --nav-size: 2.5em;
     }
+}
+
+
+
+/* Blog menu styles */
+.post-title-row a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* post list should take full width of the container */
+#post-list {
+    width: 80%;
+    max-width: 48em;
+    box-sizing: border-box;
+    display: block;
+}
+
+.post-list-entry {
+    list-style: none;
+    background: var(--text-background-color, #fff);
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.08);
+    border-radius: 0.5em;
+    margin: 1em 0;
+    padding: 1.25em 1.5em;
+    transition: box-shadow 0.2s;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: block;
+}
+.post-list-entry:hover {
+    box-shadow: 8px 12px 8px rgba(0,0,0,0.12);
+    cursor: pointer;
+}
+
+.post-list-entry .post-title-row a {
+    font-size: 1.5em;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.25em;
+}
+
+.post-list-entry .post-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5em;
+}
+
+.post-list-entry .post-meta-tags {
+    display: flex;
+    flex: 1 1 auto;
+    text-align: left;
+    min-width: 0;
+}
+
+.post-list-entry .post-meta-date {
+    flex: 0 0 auto;
+    margin-left: auto;
+    text-align: right;
+    color: #888;
+    font-size: 0.95em;
+    margin-left: 1em;
+    white-space: nowrap;
+}
+
+.post-list-entry .post-meta-abstract {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 0.5em;
+}
+
+/* Hide post-content when not displaying anything */
+.post-content.hidden {
+    display: none !important;
 }

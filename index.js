@@ -40,6 +40,28 @@ document.addEventListener('DOMContentLoaded', () => {
 function loadContentByHash(hash) {
     // Default to 'home' if no hash
     let contentFile = hash ? hash.substring(1) : 'home';
+
+    // Handle post view: #post/<slug>
+    if (contentFile.startsWith('post/')) {
+        // Always load the blog view first
+        fetch('./views/blog.html')
+          .then(response => response.text())
+          .then(data => {
+            document.querySelector('main').innerHTML = data;
+            updateActiveNavLink('#blog');
+            // Dynamically load blog.js for post list and post rendering
+            const script = document.createElement('script');
+            script.src = './blog/blog.js';
+            script.onload = () => {
+              // Extract slug and call renderBlogPost
+              const slug = contentFile.replace('post/', '');
+              if (window.renderBlogPost) window.renderBlogPost(slug);
+            };
+            document.querySelector('main').appendChild(script);
+          });
+        return;
+    }
+
     // Construct file path
     let filePath = `./views/${contentFile}.html`; 
 
@@ -48,6 +70,13 @@ function loadContentByHash(hash) {
       .then(data => {
         document.querySelector('main').innerHTML = data;
         updateActiveNavLink('#' + contentFile);
+        // if blog, force load blog.js
+        // embed in blog.html does not work, as html load does not reload the page
+        if (contentFile === 'blog') {
+          const script = document.createElement('script');
+          script.src = './blog/blog.js';
+          document.querySelector('main').appendChild(script);
+        }
       })
       .catch(err => {
         console.error('Failed to load the content:', err);
