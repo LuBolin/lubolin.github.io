@@ -204,7 +204,7 @@ window.renderBlogPost = function(slug) {
       }
     }
     // Fetch and render markdown
-    const mdPath = `./blog/posts/${slug}.md`;
+    const mdPath = `blog/posts/${slug}.md`;
     fetch(mdPath)
       .then(res => {
         if (!res.ok) throw new Error('Markdown not found');
