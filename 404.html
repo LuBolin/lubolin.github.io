@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hi, I'm Bloin</title>
+    <link rel="icon" href="./assets/images/favicon.png">
+    <link rel="stylesheet" href="./base.css">
+    <link rel="stylesheet" href="./index.css">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+  </head>
+  <body>
+    <div class="root-flex-container">
+      <div id="navbar"></div>
+      <main class="main"></main>
+    </div>
+    <script>
+      // If not already a hash route, redirect to hash route
+      if (!window.location.hash || !window.location.hash.startsWith('#/')) {
+        var path = window.location.pathname.replace(/^\//, '');
+        if (path && path !== 'index.html' && path !== '404.html') {
+          window.location.replace('/#/' + path + window.location.search + window.location.hash);
+        }
+      }
+    </script>
+    <script src="./index.js"></script>
+    <script src="./views/navbar.js"></script>
+  </body>
+</html>
