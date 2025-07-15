@@ -2,8 +2,8 @@
 (function() {
   // If not already a hash route, redirect to hash route
   if (!window.location.hash || !window.location.hash.startsWith('#/')) {
-    // Prevent infinite redirect loop: only redirect if already on 404.html
-    if (window.location.pathname.endsWith('404.html')) return;
+    // Prevent infinite redirect loop: only redirect if already on 404.html or a /post/ subpath
+    if (window.location.pathname.endsWith('404.html') || window.location.pathname.startsWith('/post/')) return;
     var path = window.location.pathname.replace(/^\//, '');
     var normalizedPath = path.replace(/\/$/, '');
     // Only redirect if path is a valid route
