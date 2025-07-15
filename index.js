@@ -24,9 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (navbar) {
         navbar.addEventListener('click', function(e) {
             if (e.target.tagName === 'A') {
-                e.preventDefault();
                 let href = e.target.getAttribute('href');
+                // Only preventDefault for hash links
                 if (href && href.startsWith('#')) {
+                    e.preventDefault();
                     // If not already #/, convert to #/
                     if (!href.startsWith('#/')) {
                         href = href.replace(/^#/, '#/');

@@ -32,7 +32,8 @@
                     li.tabIndex = 0; // Make focusable for keyboard
                     li.setAttribute('role', 'link');
                     li.setAttribute('aria-label', post.meta.title);
-                    const postUrl = `#post/${post.file.replace(/\.md$/, '')}`;
+                    // Use #/post/... for all post links
+                    const postUrl = `#/post/${post.file.replace(/\.md$/, '')}`;
                     li.addEventListener('click', () => {
                         window.location.hash = postUrl;
                     });
