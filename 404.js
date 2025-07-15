@@ -17,8 +17,8 @@
           } else {
             window.location.replace(window.location.origin + '/#/blog');
           }
-        })
-        .catch(function() {
+        }, function() {
+          // Network error or CORS error
           window.location.replace(window.location.origin + '/#/blog');
         });
       return;
