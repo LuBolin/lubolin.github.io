@@ -22,9 +22,6 @@
           window.location.replace(window.location.origin + '/#/blog');
         });
       return;
-    } else {
-      // For all other invalid routes, redirect to home and update the URL
-      window.location.replace(window.location.origin + '/');
     }
     // Otherwise, do not redirect (show 404)
   }
