@@ -20,15 +20,29 @@ loadContentByHash(window.location.hash);
 
 // Navbar click listener
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('navbar').addEventListener('click', function(e) {
-        if (e.target.tagName === 'A') {
-        e.preventDefault();
-        let href = e.target.getAttribute('href');
-        if (href && href.startsWith('#')) {
-            window.location.hash = href; // Change the hash
-        }
-        }
-    });
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
+        navbar.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A') {
+                e.preventDefault();
+                let href = e.target.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    // If not already #/, convert to #/
+                    if (!href.startsWith('#/')) {
+                        href = href.replace(/^#/, '#/');
+                    }
+                    window.location.hash = href;
+                }
+            }
+        });
+        // Update all nav links to use #/ instead of #
+        navbar.querySelectorAll('a[href^="#"]').forEach(link => {
+            let href = link.getAttribute('href');
+            if (href && !href.startsWith('#/')) {
+                link.setAttribute('href', href.replace(/^#/, '#/'));
+            }
+        });
+    }
 });
 
 
@@ -38,8 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Function to load content based on # value in url
 function loadContentByHash(hash) {
-    // Default to 'home' if no hash
-    let contentFile = hash ? hash.substring(1) : 'home';
+    // Support #/route style hashes
+    let contentFile = hash ? hash.replace(/^#\/?/, '') : 'home';
 
     // Handle post view: #post/<slug>
     if (contentFile.startsWith('post/')) {
