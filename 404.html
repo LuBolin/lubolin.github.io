@@ -14,16 +14,8 @@
       <div id="navbar"></div>
       <main class="main"></main>
     </div>
-    <script>
-      // If not already a hash route, redirect to hash route
-      if (!window.location.hash || !window.location.hash.startsWith('#/')) {
-        var path = window.location.pathname.replace(/^\//, '');
-        if (path && path !== 'index.html' && path !== '404.html') {
-          window.location.replace('/#/' + path + window.location.search + window.location.hash);
-        }
-      }
-    </script>
     <script src="./index.js"></script>
     <script src="./views/navbar.js"></script>
+    <script src="./404.js"></script>
   </body>
 </html>
