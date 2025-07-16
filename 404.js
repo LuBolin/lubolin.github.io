@@ -1,47 +1,36 @@
-// 404.js - redirect only valid routes to hash-based SPA
+// 404.js - Simple redirect: if not already a hash route, make it one
 (function() {
-  // Always run redirect logic if on 404.html (GitHub Pages custom 404)
-  var is404 = window.location.pathname.endsWith('404.html');
-  var isRoot = window.location.pathname === '/' || window.location.pathname.endsWith('/index.html');
-  var isHashRoute = window.location.hash && window.location.hash.startsWith('#/');
-
-  // Only skip redirect if already on a hash route and on root/index.html
-  if (isHashRoute && (isRoot || is404)) {
-    return;
-  }
-
-  // Use the path before 404.html if present (for GitHub Pages)
-  var path = window.location.pathname.replace(/^\/+|\/404\.html$/g, '').replace(/^\/+|\/$/g, '');
-  var normalizedPath = path;
-  var validRoutes = ['about', 'projects', 'blog', 'contact'];
-  if (validRoutes.includes(normalizedPath)) {
-    window.location.replace(window.location.origin + '/#/' + normalizedPath + window.location.search + window.location.hash);
-    return;
-  } else if (normalizedPath.startsWith('post')) {
-    // Accept both /post and /post/
-    var postName = normalizedPath.length > 4 ? normalizedPath.slice(5) : '';
-    if (!postName) {
-      window.location.replace(window.location.origin + '/#/blog');
+  // If not already a hash route and not on 404.html, convert to hash route
+  if (!window.location.hash.startsWith('#/') && !window.location.pathname.endsWith('404.html')) {
+    var path = window.location.pathname.replace(/^\/+|\/$/g, ''); // Remove leading/trailing slashes
+  
+    // Special handling for /post cases
+    if (path.startsWith('post')) {
+      var postName = path.length > 4 ? path.slice(5) : '';
+      if (!postName) {
+        // /post or /post/ with no post name -> redirect to blog
+        window.location.replace(window.location.origin + '/#/blog');
+        return;
+      }
+      // Check if post exists
+      var mdUrl = window.location.origin + '/blog/posts/' + postName + '.md';
+      fetch(mdUrl, { method: 'HEAD' })
+        .then(function(res) {
+          if (!res.ok) {
+            // Post doesn't exist, redirect to blog
+            window.location.replace(window.location.origin + '/#/blog');
+          } else {
+            // Post exists, convert to hash route
+            window.location.replace(window.location.origin + '/#/' + path + window.location.search + window.location.hash);
+          }
+        }, function() {
+          // Error checking post, redirect to blog
+          window.location.replace(window.location.origin + '/#/blog');
+        });
       return;
     }
-    var mdUrl = window.location.origin + '/blog/posts/' + postName + '.md';
-    fetch(mdUrl, { method: 'HEAD' })
-      .then(function(res) {
-        if (res.ok) {
-          // Only redirect if not already on the hash route
-          if (!window.location.hash.startsWith('#/post/')) {
-            window.location.replace(window.location.origin + '/#/post/' + postName + window.location.search + window.location.hash);
-          }
-        } else {
-          window.location.replace(window.location.origin + '/#/blog');
-        }
-      }, function() {
-        window.location.replace(window.location.origin + '/#/blog');
-      });
-    return;
-  } else {
-    window.location.replace(window.location.origin + '/');
-    return;
+    
+    // For all other paths, simply add /#/ in front
+    window.location.replace(window.location.origin + '/#/' + path + window.location.search + window.location.hash);
   }
-  // Otherwise, do not redirect (show 404)
 })();
