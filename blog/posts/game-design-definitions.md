@@ -21,7 +21,7 @@ Fun is more about dynamic engagement than mere consumption of pleasure.
 ## Game
 ### Necessary
 - Emotional value: A game affords the potential to evoke pleasure during the experience
-  - This need not necessarily be "fun"
+  - This need not necessarily be "fun" (I'm not confident about this)
   - This does not imply the overall emotional value has to be desirable
 - Autonomy: The player can make decisions and act on them
 - Interactivity: The game system changes in response to the player's actions
@@ -32,3 +32,7 @@ Fun is more about dynamic engagement than mere consumption of pleasure.
 ## Toy
 - A system with autonomy and interactivity, but without explicit goals
 - Toys can still be fun, but they do not impose objectives on the player
+
+
+## Dictionary
+- Affordance: The perceived and actual properties of an object that suggest how it should be used
