@@ -16,5 +16,14 @@
       "tags": "[Game Design]",
       "date": "2025/08/18"
     }
+  },
+  {
+    "file": "tic-tac-toe-variant.md",
+    "meta": {
+      "title": "A tic-tac-toe variant",
+      "abstract": "A variant where the second player places a bomb",
+      "tags": "[Game Design]",
+      "date": "2025/08/25"
+    }
   }
 ]
