@@ -2,7 +2,7 @@
 title: Quotes I like
 abstract: A collection of quotes, inspiring / funny / etc.
 tags: [Quotes]
-date: 2025/09/30
+date: 2002/06/18
 ---
 
 # Inspirational-ish
