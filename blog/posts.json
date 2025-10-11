@@ -1,5 +1,14 @@
 [
   {
+    "file": "fun-solutions.md",
+    "meta": {
+      "title": "Fun Solutions to the Cumulative Sum Tuple Problem",
+      "abstract": "A fun solution to the cumulative sum tuple problem",
+      "tags": "[Programming, Python]",
+      "date": "2025/10/11"
+    }
+  },
+  {
     "file": "game-design-definitions.md",
     "meta": {
       "title": "Game Design Definitions",
