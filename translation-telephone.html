@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translation Loops</title>
+    <link rel="icon" href="./assets/images/favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @font-face{
+            font-family:d-din;
+            font-style:normal; font-weight:400;
+            src:local('D-DIN'),
+            url(https://fonts.cdnfonts.com/s/23112/D-DIN.woff)  format('woff')
+        }
+
+        body {
+            font-family: 'D-DIN', Verdana, sans-serif;
+            background-color: #F8FAE5;
+            min-height: 100vh;
+            padding: 20px;
+            color: #76453b;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #f5f5f5;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.08);
+            padding: 30px;
+        }
+
+        h1 {
+            color: #76453b;
+            margin-bottom: 0.5em;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: #B19470;
+            margin-bottom: 2em;
+            font-size: 1em;
+        }
+
+        .config-section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .config-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .config-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #76453b;
+            font-weight: 600;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #B19470;
+            background: white;
+            font-size: 16px;
+            font-family: 'D-DIN', Verdana, sans-serif;
+            color: #76453b;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #43766C;
+        }
+
+        .language-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .arrow {
+            color: #43766C;
+            font-size: 24px;
+        }
+
+        button {
+            background: #43766C;
+            color: #F8FAE5;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'D-DIN', Verdana, sans-serif;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #76453b;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .results-section {
+            margin-top: 30px;
+        }
+
+        .translation-step {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #B19470;
+            font-size: 14px;
+        }
+
+        .translation-text {
+            font-size: 18px;
+            color: #76453b;
+            word-break: break-word;
+        }
+
+        .loop-separator {
+            text-align: center;
+            color: #B19470;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .error-message {
+            background: #fdd;
+            color: #76453b;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .loading {
+            text-align: center;
+            color: #43766C;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+
+        .char-counter {
+            text-align: right;
+            color: #B19470;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Translation Loops</h1>
+        <p class="subtitle">See how text transforms when translated back and forth</p>
+
+        <div class="config-section">
+            <div class="config-row">
+                <div class="config-group">
+                    <label for="loopCount">Number of Loops:</label>
+                    <input type="number" id="loopCount" min="1" max="20" value="5">
+                </div>
+            </div>
+
+            <label>Languages:</label>
+            <div class="language-row">
+                <select id="sourceLang" onchange="validateLanguages()">
+                    <option value="en">English</option>
+                    <option value="zh-CN">Chinese (Simplified)</option>
+                    <option value="zh-TW">Chinese (Traditional)</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="it">Italian</option>
+                    <option value="ja">Japanese</option>
+                    <option value="ko">Korean</option>
+                    <option value="pt">Portuguese</option>
+                    <option value="ru">Russian</option>
+                    <option value="ar">Arabic</option>
+                    <option value="hi">Hindi</option>
+                    <option value="tr">Turkish</option>
+                    <option value="pl">Polish</option>
+                    <option value="nl">Dutch</option>
+                    <option value="sv">Swedish</option>
+                    <option value="da">Danish</option>
+                    <option value="no">Norwegian</option>
+                    <option value="fi">Finnish</option>
+                    <option value="el">Greek</option>
+                    <option value="he">Hebrew</option>
+                    <option value="th">Thai</option>
+                    <option value="vi">Vietnamese</option>
+                    <option value="id">Indonesian</option>
+                    <option value="ms">Malay</option>
+                </select>
+                <span class="arrow">⟷</span>
+                <select id="targetLang" onchange="validateLanguages()">
+                    <option value="zh-CN">Chinese (Simplified)</option>
+                    <option value="en">English</option>
+                    <option value="zh-TW">Chinese (Traditional)</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="it">Italian</option>
+                    <option value="ja">Japanese</option>
+                    <option value="ko">Korean</option>
+                    <option value="pt">Portuguese</option>
+                    <option value="ru">Russian</option>
+                    <option value="ar">Arabic</option>
+                    <option value="hi">Hindi</option>
+                    <option value="tr">Turkish</option>
+                    <option value="pl">Polish</option>
+                    <option value="nl">Dutch</option>
+                    <option value="sv">Swedish</option>
+                    <option value="da">Danish</option>
+                    <option value="no">Norwegian</option>
+                    <option value="fi">Finnish</option>
+                    <option value="el">Greek</option>
+                    <option value="he">Hebrew</option>
+                    <option value="th">Thai</option>
+                    <option value="vi">Vietnamese</option>
+                    <option value="id">Indonesian</option>
+                    <option value="ms">Malay</option>
+                </select>
+            </div>
+
+            <label for="inputText">Input Text:</label>
+            <textarea id="inputText" rows="3" placeholder="Enter text to translate..."
+                      onkeyup="updateCharCount()"></textarea>
+            <div id="inputCharCount" class="char-counter">0 characters</div>
+        </div>
+
+        <div class="action-buttons">
+            <button id="translateBtn" onclick="startTranslation()">Start Translation</button>
+            <button onclick="clearResults()">Clear</button>
+        </div>
+
+        <div id="results" class="results-section"></div>
+    </div>
+
+    <script>
+        const languageNames = {
+            'en': 'English',
+            'zh-CN': 'Chinese (Simplified)',
+            'zh-TW': 'Chinese (Traditional)',
+            'es': 'Spanish',
+            'fr': 'French',
+            'de': 'German',
+            'it': 'Italian',
+            'ja': 'Japanese',
+            'ko': 'Korean',
+            'pt': 'Portuguese',
+            'ru': 'Russian',
+            'ar': 'Arabic',
+            'hi': 'Hindi',
+            'tr': 'Turkish',
+            'pl': 'Polish',
+            'nl': 'Dutch',
+            'sv': 'Swedish',
+            'da': 'Danish',
+            'no': 'Norwegian',
+            'fi': 'Finnish',
+            'el': 'Greek',
+            'he': 'Hebrew',
+            'th': 'Thai',
+            'vi': 'Vietnamese',
+            'id': 'Indonesian',
+            'ms': 'Malay'
+        };
+
+        // Initialize on page load
+        window.onload = function() {
+            validateLanguages();
+        };
+
+        function validateLanguages() {
+            const sourceLang = document.getElementById('sourceLang').value;
+            const targetLang = document.getElementById('targetLang').value;
+            const translateBtn = document.getElementById('translateBtn');
+
+            if (sourceLang === targetLang) {
+                translateBtn.disabled = true;
+                translateBtn.textContent = 'Select Different Languages';
+            } else {
+                translateBtn.disabled = false;
+                translateBtn.textContent = 'Start Translation';
+            }
+        }
+
+        function updateCharCount() {
+            const text = document.getElementById('inputText').value;
+            document.getElementById('inputCharCount').textContent = `${text.length} characters`;
+        }
+
+        async function translate(text, fromLang, toLang) {
+            const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${fromLang}|${toLang}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.responseStatus === 200) {
+                    return data.responseData.translatedText;
+                } else if (data.responseStatus === 429) {
+                    throw new Error('Daily API quota exceeded. Please try again tomorrow.');
+                } else {
+                    throw new Error('Translation failed');
+                }
+            } catch (error) {
+                console.error('Translation error:', error);
+                throw error;
+            }
+        }
+
+        async function startTranslation() {
+            const inputText = document.getElementById('inputText').value.trim();
+            const loopCount = parseInt(document.getElementById('loopCount').value);
+            const sourceLang = document.getElementById('sourceLang').value;
+            const targetLang = document.getElementById('targetLang').value;
+            const resultsDiv = document.getElementById('results');
+            const translateBtn = document.getElementById('translateBtn');
+
+            if (!inputText) {
+                alert('Please enter some text');
+                return;
+            }
+
+            if (sourceLang === targetLang) {
+                alert('Please select different languages');
+                return;
+            }
+
+            // Disable button during translation
+            translateBtn.disabled = true;
+            resultsDiv.innerHTML = '<div class="loading">Translating...</div>';
+
+            try {
+                let currentText = inputText;
+                let allSteps = [{
+                    text: inputText,
+                    label: 'Original',
+                    loop: 0
+                }];
+
+                // Track last few results to detect stabilization
+                let recentSourceTexts = [];
+                let stabilized = false;
+                let stabilizedAtLoop = null;
+
+                for (let loop = 1; loop <= loopCount; loop++) {
+                    // Translate to target language
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    const toTarget = await translate(currentText, sourceLang, targetLang);
+
+                    allSteps.push({
+                        text: toTarget,
+                        label: `Loop ${loop}: ${languageNames[sourceLang]} → ${languageNames[targetLang]}`,
+                        loop: loop
+                    });
+
+                    // Translate back to source language
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    const toSource = await translate(toTarget, targetLang, sourceLang);
+
+                    allSteps.push({
+                        text: toSource,
+                        label: `Loop ${loop}: ${languageNames[targetLang]} → ${languageNames[sourceLang]}`,
+                        loop: loop,
+                        isStabilized: false
+                    });
+
+                    // Check if translation has stabilized
+                    recentSourceTexts.push(toSource);
+
+                    // Keep only last 2 source texts for comparison
+                    if (recentSourceTexts.length > 2) {
+                        recentSourceTexts.shift();
+                    }
+
+                    // Check if last 2 iterations produced the same result
+                    if (recentSourceTexts.length === 2 &&
+                        recentSourceTexts[0] === recentSourceTexts[1]) {
+                        stabilized = true;
+                        stabilizedAtLoop = loop;
+                        allSteps[allSteps.length - 1].isStabilized = true;
+                        break;
+                    }
+
+                    currentText = toSource;
+                }
+
+                // Display results with stabilization note
+                displayResults(allSteps, stabilized, stabilizedAtLoop);
+
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="error-message">${error.message}</div>`;
+            } finally {
+                translateBtn.disabled = false;
+            }
+        }
+
+        function displayResults(steps, stabilized, stabilizedAtLoop) {
+            const resultsDiv = document.getElementById('results');
+            let html = '<h2>Results:</h2>';
+
+            // Add stabilization notice if applicable
+            if (stabilized) {
+                html += `<div style="background: #e8f5e9; border-left: 4px solid #43766C; padding: 10px; margin-bottom: 20px; color: #43766C;">
+                    Translation stabilized at loop ${stabilizedAtLoop} (same result for 2 consecutive iterations)
+                </div>`;
+            }
+
+            let currentLoop = -1;
+            steps.forEach((step, index) => {
+                if (step.loop > currentLoop) {
+                    if (step.loop > 0) {
+                        html += `<div class="loop-separator">Loop ${step.loop}</div>`;
+                    }
+                    currentLoop = step.loop;
+                }
+
+                // Highlight stabilized step
+                const stepClass = step.isStabilized ? 'translation-step' : 'translation-step';
+                const stabilizedNote = step.isStabilized ? ' <span style="color: #43766C; font-weight: bold;">[Stabilized]</span>' : '';
+
+                html += `
+                    <div class="${stepClass}">
+                        <div class="step-header">
+                            <span>${step.label}${stabilizedNote}</span>
+                        </div>
+                        <div class="translation-text">${step.text}</div>
+                    </div>
+                `;
+            });
+
+            resultsDiv.innerHTML = html;
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('inputText').value = '';
+            updateCharCount();
+        }
+    </script>
+</body>
+</html>

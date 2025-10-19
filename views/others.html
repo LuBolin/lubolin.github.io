@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .others-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .others-header {
+            margin-bottom: 2em;
+        }
+
+        .others-header h1 {
+            font-size: 2em;
+            color: var(--color-primary, #76453b);
+            margin-bottom: 0.5em;
+            font-weight: bold;
+        }
+
+        .others-header p {
+            font-size: 1em;
+            color: var(--color-accent, #B19470);
+        }
+
+        .others-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .others-card {
+            background: var(--text-background-color, #f5f5f5);
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.08);
+            padding: 25px;
+            transition: box-shadow 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .others-card:hover {
+            box-shadow: 8px 12px 8px rgba(0,0,0,0.12);
+        }
+
+        .others-card-title {
+            font-size: 1.3em;
+            color: var(--color-primary, #76453b);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .others-card-description {
+            color: #555;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .others-card-tag {
+            display: inline-block;
+            background: var(--color-secondary, #43766C);
+            color: var(--color-neutral, #F8FAE5);
+            padding: 4px 10px;
+            font-size: 0.85em;
+            margin-top: 15px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="others-container">
+        <div class="others-header">
+            <h1>Other Stuff</h1>
+            <p>Tools and experiments</p>
+        </div>
+
+        <div class="others-grid">
+            <a href="translation-telephone.html" target="_blank" class="others-card">
+                <div class="others-card-title">Translation Loops</div>
+                <div class="others-card-description">
+                    See how text changes when translated back and forth between languages. Watch meaning shift through translation cycles.
+                </div>
+                <span class="others-card-tag">Translation API</span>
+            </a>
+
+            <!-- You can add more cards here in the future -->
+            <!-- Example placeholder for future projects:
+            <a href="#" class="others-card">
+                <div class="others-card-icon">🎮</div>
+                <div class="others-card-title">Coming Soon</div>
+                <div class="others-card-description">
+                    More fun tools and experiments coming soon!
+                </div>
+                <span class="others-card-tag">Coming Soon</span>
+            </a>
+            -->
+        </div>
+    </div>
+</body>
+</html>
