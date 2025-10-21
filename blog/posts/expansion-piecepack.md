@@ -5,10 +5,10 @@ tags: [Game Design, Board Games, Piecepack]
 date: 2025/09/21
 ---
 
-**Designers**: Lu Bolin, Teng Yan Zhen, Julia Kwek
-**Players:** 2
-**Ages:** 10+
-**Game Length:** ~5–10 minutes
+**Designers**: Lu Bolin, Teng Yan Zhen, Julia Kwek<br>
+**Players:** 2<br>
+**Ages:** 10+<br>
+**Game Length:** ~5–10 minutes<br>
 **Equipment:** Standard Piecepack set
 
 ## Overview
@@ -176,6 +176,10 @@ The player who controls the most captured tiles wins.
 **Tiebreakers:**
 1. Player who captured the center tile wins.
 2. If neither did, the **second player** wins.
+
+## Download
+
+[Download the complete game instructions (PDF)](/assets/blog/expansion-piecepack/expansion_instructions.pdf)
 
 ## License
 

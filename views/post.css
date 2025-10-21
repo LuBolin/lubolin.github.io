@@ -62,12 +62,42 @@
     color: var(--color-accent);
 }
 
-/* Ensure H1 headers maintain margin from screen edges */
-.post-body h1 {
-    margin-left: 0.5em;
-    margin-right: 0.5em;
+/* Main blog title H1 (outside post-content) */
+h1#blog-title {
+    margin-left: 1em;
+    margin-right: 1em;
+    padding: 0 0.5em;
     overflow-wrap: break-word;
     word-wrap: break-word;
+}
+
+/* Fallback for any H1 outside post-content */
+h1:not(.post-body h1) {
+    margin-left: 1em;
+    margin-right: 1em;
+    overflow-wrap: break-word;
+}
+
+/* Header spacing and margins inside post body */
+.post-body h1,
+.post-body h2,
+.post-body h3,
+.post-body h4,
+.post-body h5,
+.post-body h6 {
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+    margin-left: 0;
+    margin-right: 0;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+/* First header in post body needs less top margin */
+.post-body > h1:first-child,
+.post-body > h2:first-child,
+.post-body > h3:first-child {
+    margin-top: 0.5em;
 }
 
 /* Ensure the post content itself has minimum padding */
