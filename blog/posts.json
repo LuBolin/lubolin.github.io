@@ -1,5 +1,14 @@
 [
   {
+    "file": "expansion-piecepack.md",
+    "meta": {
+      "title": "Expansion: A Piecepack Game",
+      "abstract": "A two-player territory-control strategy game using a standard Piecepack set",
+      "tags": "[Game Design, Board Games, Piecepack]",
+      "date": "2025/09/21"
+    }
+  },
+  {
     "file": "fun-solutions.md",
     "meta": {
       "title": "Fun Solutions to the Cumulative Sum Tuple Problem",

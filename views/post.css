@@ -61,3 +61,45 @@
 .post-meta-tags-list {
     color: var(--color-accent);
 }
+
+/* Ensure H1 headers maintain margin from screen edges */
+.post-body h1 {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+/* Ensure the post content itself has minimum padding */
+.post-content {
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* Ensure minimum margins even when zoomed */
+@media (max-width: 600px) {
+    .post-content {
+        width: 95%;
+        max-width: 95%;
+    }
+}
+
+/* Fix list alignment - keep bullets/numbers within content area */
+.post-body ul,
+.post-body ol {
+    padding-left: 1.5em;  /* Indent lists properly */
+    margin-left: 0;       /* Remove default margin */
+}
+
+.post-body li {
+    margin-bottom: 0.25em;  /* Small spacing between items */
+}
+
+/* Ensure nested lists are properly indented */
+.post-body ul ul,
+.post-body ul ol,
+.post-body ol ul,
+.post-body ol ol {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
