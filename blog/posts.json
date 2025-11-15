@@ -1,5 +1,14 @@
 [
   {
+    "file": "aesthetic-driven-innovation.md",
+    "meta": {
+      "title": "On Innovation and Aesthetics",
+      "abstract": "Starting with aesthetics instead of mechanics might actually be the better path to innovation",
+      "tags": "[Game Design, MDA]",
+      "date": "2025/11/12"
+    }
+  },
+  {
     "file": "expansion-piecepack.md",
     "meta": {
       "title": "Expansion: A Piecepack Game",
