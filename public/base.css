@@ -32,6 +32,8 @@
     /* Spacing */
     /* --nav-size: 25vw; */
     --nav-size: max(25vw, 7.5em);
+    --nav-padding-vertical: 1em;
+    --nav-padding-horizontal: 2em;
     --font-size: 1.25em;
 }
 
@@ -74,12 +76,12 @@ body {
 
 /* orientation's breakpoint is at square */
 @media screen and (orientation: portrait) {
-    /* main {
-        padding-top: var(--nav-size);
-    } */
     :root {
-        /* Spacing */
-        --nav-size: 2.5em;
+        --nav-padding-vertical: 0.75em;
+        --nav-padding-horizontal: 1em;
+        --nav-content-height: 2em;
+
+        --nav-size: calc(var(--nav-content-height) + (var(--nav-padding-vertical) * 2));
     }
 }
 

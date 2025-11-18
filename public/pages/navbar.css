@@ -8,7 +8,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 1em 2em;
+    padding: var(--nav-padding-vertical) var(--nav-padding-horizontal);
     box-sizing: border-box;
 }
 
@@ -68,8 +68,7 @@
         align-items: center;
         justify-content: space-between;
         min-width: fit-content;
-        min-height: fit-content;
-        padding: 1.5em 1em;
+        padding: var(--nav-padding-vertical) var(--nav-padding-horizontal);
     }
 
     .nav-bar h1 {

@@ -16,6 +16,10 @@
 }
 
 @media screen and (orientation: portrait) {
+    .home-container {
+        height: calc(100vh - var(--nav-size));
+    }
+
     .photo-of-self {
         width: 100%;
         height: 100%;
