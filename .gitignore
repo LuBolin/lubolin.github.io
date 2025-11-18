@@ -6,6 +6,9 @@ desktop.ini
 # VS Code settings
 .vscode/
 
+# AI assistant files
+.claude/
+
 # Logs
 *.log
 
@@ -17,8 +20,9 @@ build/
 .env
 .env.*
 
-# Node modules (if you use npm/yarn in the future)
+# Node modules
 node_modules/
 
 # Others
 .ini
+
