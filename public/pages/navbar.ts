@@ -1,8 +1,8 @@
-let clickCount = 0;
+let clickCount: number = 0;
 
-function pronunce() {
-    const audio1 = document.getElementById('pronunce-Bloin');
-    const audio2 = document.getElementById('pronunce-Rickroll');
+export function pronunce(): void {
+    const audio1 = document.getElementById('pronunce-Bloin') as HTMLAudioElement;
+    const audio2 = document.getElementById('pronunce-Rickroll') as HTMLAudioElement;
 
     audio1.pause();
     audio1.currentTime = 0;
@@ -11,14 +11,14 @@ function pronunce() {
 
     clickCount++;
 
-    if (clickCount > 1 && clickCount  % 3 === 0) {
+    if (clickCount > 1 && clickCount % 3 === 0) {
         audio2.play();
     } else {
         audio1.play();
     }
 }
 
-function updateActiveNavLink(hash) {
+export function updateActiveNavLink(hash: string): void {
     const navLinks = document.querySelectorAll('#navbar a');
     navLinks.forEach(link => {
       if (link.getAttribute('href') === hash) {
@@ -32,7 +32,7 @@ function updateActiveNavLink(hash) {
 import navbarPortalVertWGSL from '../scenes/navbar_portal/navbar_portal.vert.wgsl';
 import navbarPortalFragWGSL from '../scenes/navbar_portal/navbar_portal.frag.wgsl';
 
-async function loadShangrilaPortal() {
+export async function loadShangrilaPortal(): Promise<void> {
 
   const adapter = await navigator.gpu?.requestAdapter(
     { featureLevel: "compatibility" }
@@ -40,31 +40,31 @@ async function loadShangrilaPortal() {
   const device = await adapter?.requestDevice();
   const devicePixelRatio = window.devicePixelRatio || 1;
 
-  const canvas = document.querySelector('.portal-container');
+  const canvas = document.querySelector('.portal-container') as HTMLCanvasElement;
 
-  const context = canvas.getContext('webgpu');
+  const context = canvas.getContext('webgpu') as GPUCanvasContext;
   canvas.width = canvas.clientWidth * devicePixelRatio;
   canvas.height = canvas.clientHeight * devicePixelRatio;
   const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
-  
+
   context.configure({
-    device: device,
+    device: device!,
     format: presentationFormat,
     alphaMode: "premultiplied"
   });
 
   const sampleCount = 4;
 
-  
-  const pipeline = device.createRenderPipeline({
+
+  const pipeline = device!.createRenderPipeline({
     layout: "auto",
     vertex: {
-      module: device.createShaderModule({
+      module: device!.createShaderModule({
         code: navbarPortalVertWGSL
       }),
     },
     fragment: {
-      module: device.createShaderModule({
+      module: device!.createShaderModule({
         code: navbarPortalFragWGSL
       }),
       targets: [
@@ -80,7 +80,7 @@ async function loadShangrilaPortal() {
     },
   });
 
-  const texture = device.createTexture({
+  const texture = device!.createTexture({
     size: [canvas.width, canvas.height],
     sampleCount: sampleCount,
     format: presentationFormat,
@@ -89,9 +89,9 @@ async function loadShangrilaPortal() {
 
   const view = texture.createView();
 
-  function frame() {
-    const commandEncoder = device.createCommandEncoder();
-    const renderPassDescriptor = {
+  function frame(): void {
+    const commandEncoder = device!.createCommandEncoder();
+    const renderPassDescriptor: GPURenderPassDescriptor = {
       colorAttachments: [
         {
           view: view,
@@ -106,7 +106,7 @@ async function loadShangrilaPortal() {
     passEncoder.setPipeline(pipeline);
     passEncoder.draw(6, 1, 0, 0);
     passEncoder.end();
-    device.queue.submit([commandEncoder.finish()]);
+    device!.queue.submit([commandEncoder.finish()]);
     requestAnimationFrame(frame);
   }
 
