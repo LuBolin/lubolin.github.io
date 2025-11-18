@@ -102,18 +102,16 @@
 })();
 
 window.renderBlogPost = function(slug) {
-    // Dynamically load post.css if not already loaded
     function ensurePostCssLoaded() {
       if (![...document.styleSheets].some(s => s.href && s.href.endsWith('post.css'))) {
         const link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href = 'views/post.css'; // relative to main HTML
+        link.href = 'pages/post.css';
         document.head.appendChild(link);
       }
     }
     ensurePostCssLoaded();
 
-    // Hide menu and tag bar
     const tagBar = document.getElementById('tag-bar');
     const postList = document.getElementById('post-list');
     const postContent = document.getElementById('post-content');
@@ -179,11 +177,9 @@ window.renderBlogPost = function(slug) {
       metaHtml += '<hr class="post-meta-separator">';
 
       metaHtml += '</div>';
-      // Remove first <h1> if it matches meta.title
       let bodyHtml = window.marked.parse(body);
       if (meta.title) {
         bodyHtml = bodyHtml.replace(new RegExp(`<h1[^>]*>\\s*${meta.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*<\\/h1>`, 'i'), '');
-        // Update #blog-title if present
         const blogTitleElem = document.getElementById('blog-title');
         if (blogTitleElem) blogTitleElem.textContent = meta.title;
       }
