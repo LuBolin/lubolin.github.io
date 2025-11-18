@@ -22,6 +22,8 @@ build/
 
 # Node modules
 node_modules/
+dist/
+*.log
 
 # Others
 .ini

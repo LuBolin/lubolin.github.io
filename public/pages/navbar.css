@@ -1,17 +1,15 @@
-@import '../base.css';
+@import '/base.css';
 
-/* ----------------------------
-   Base Navigation Bar Styling
------------------------------ */
 .nav-bar {
-    width: var(--nav-size);
+    width: 100%;
     height: 100%;
-    position: fixed;
+    position: relative;
     background-color: var(--color-secondary);
     display: flex;
     flex-direction: column;
-    align-items: baseline;
+    align-items: flex-start;
     padding: 1em 2em;
+    box-sizing: border-box;
 }
 
 .nav-bar * {
@@ -44,9 +42,7 @@
     flex-grow: 1;
 }
 
-/* ----------------------------
-   Icons and Interactive Elements
------------------------------ */
+
 .pronunce-icon {
     text-shadow: 0;
     transition: text-shadow 0.1s;
@@ -56,37 +52,39 @@
     text-shadow: 1px 1px 3px black;
 }
 
-/* Active Link Styling */
+
 .nav-active {
     font-weight: bold;
     text-shadow: 1px 1px 1px black;
 }
 
-/* ----------------------------
-   Responsive Styling - Width
------------------------------ */
-@media screen and (max-width: 720px) {
-    .nav-bar {
-        padding: 0.5em 1em;
-    }
-}
 
-/* ----------------------------
-   Responsive Styling - Portrait Orientation
------------------------------ */
+
 @media screen and (orientation: portrait) {
     .nav-bar {
         width: 100%;
-        height: var(--nav-size); /* height with padding */
+        height: 100%;
         flex-direction: row;
         align-items: center;
+        justify-content: space-between;
         min-width: fit-content;
         min-height: fit-content;
+        padding: 1.5em 1em;
+    }
+
+    .nav-bar h1 {
+        margin: 0;
+        flex-shrink: 0;
+    }
+
+    .nav-bar ul {
+        margin: 0;
+        flex-shrink: 0;
     }
 
     .nav-bar li {
         display: inline;
-        margin: 0 0.25em;
+        margin: 0 0.5em;
     }
 
     .nav-bar .space-filler {
@@ -98,7 +96,8 @@
     }
 
     .quote,
-    .pronunciation {
+    .pronunciation,
+    .portal-container {
         display: none;
     }
 }

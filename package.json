@@ -1,5 +1,19 @@
 {
+  "type": "module",
   "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
     "watch:posts": "node watcher.js"
+  },
+  "devDependencies": {
+    "@types/marked": "^5.0.2",
+    "@types/node": "^24.10.1",
+    "@webgpu/types": "^0.1.66",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.2"
+  },
+  "dependencies": {
+    "marked": "^17.0.0"
   }
-} 
+}

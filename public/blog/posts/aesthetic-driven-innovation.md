@@ -5,7 +5,7 @@ tags: [Game Design, MDA]
 date: 2025/11/12
 ---
 
-# Discussion
+## Discussion
 
 In class we talked about whether players are actually open to innovation.
 And I think the answer is yes, but it depends on *how* you approach it.
@@ -16,7 +16,7 @@ There's 2 "formulaic" basically two ways to innovate:
 
 I think the second one works way better.
 
-# Quick MDA Recap
+## Quick MDA Recap
 
 The MDA framework says games have three layers:
 - **Mechanics**: the rules
@@ -26,7 +26,7 @@ The MDA framework says games have three layers:
 Designers think Mechanics → Dynamics → Aesthetics.
 Players experience it backwards: Aesthetics → Dynamics → Mechanics.
 
-# The Problem with "Cool Mechanic First"
+## The Problem with "Cool Mechanic First"
 
 When you start with "here's a novel mechanic," you run into issues.
 
@@ -40,7 +40,7 @@ That's a big ask if they don't know what they're getting.
 Finally, to start with a cool mechanic, you have to come up with the cool mechanic first.
 That's hard! Innovation is hard. You might end up with something that feels forced or gimmicky.
 
-# Starting with the Feeling
+## Starting with the Feeling
 But starting with aesthetics allows easy innovation through recombination.
 
 Taking an aesthetic goal, even sampling from an existing game (like "I want that farming experience from Stardew Valley") gives you a clear target.
@@ -51,5 +51,5 @@ With aesthetics driven innovation, you can mix and match existing mechanics in n
 This lowers the bar for innovation, since you're not inventing something from scratch.
 Plus, players can immediately understand the goal: "Oh, this game is trying to make me feel X."
 
-# Conclusion
+## Conclusion
 Idk, this is one approach. A little hacky, but it might help get past the innovation barrier.
