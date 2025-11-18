@@ -1,5 +1,6 @@
 import { updateActiveNavLink } from './navbar';
 import { initializeBlogList, renderBlogPost } from './blog';
+import './navbar_portal';
 
 // Load navbar HTML
 fetch('/pages/navbar.html')

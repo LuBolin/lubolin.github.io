@@ -96,7 +96,20 @@
 
     .quote,
     .pronunciation,
-    .portal-container {
+    .portal-container,
+    navbar-portal {
         display: none;
     }
+}
+
+navbar-portal {
+    display: block;
+    width: 100%;
+    height: 200px;
+}
+
+navbar-portal canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
