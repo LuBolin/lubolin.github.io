@@ -1,4 +1,4 @@
-import { updateActiveNavLink } from './navbar';
+import { updateActiveNavLink, setupPortalClickHandler, setupPronunciationHandler } from './navbar';
 import { initializeBlogList, renderBlogPost } from './blog';
 import './navbar_portal';
 
@@ -9,6 +9,8 @@ fetch('/pages/navbar.html')
         const navbarElem = document.getElementById('navbar');
         if (navbarElem) {
             navbarElem.innerHTML = data;
+            setupPortalClickHandler();
+            setupPronunciationHandler();
         }
     });
 

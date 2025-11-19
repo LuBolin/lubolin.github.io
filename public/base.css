@@ -35,6 +35,8 @@
     --nav-padding-vertical: 1em;
     --nav-padding-horizontal: 2em;
     --font-size: 1.25em;
+
+    --navbar-portal-aspect: 4 / 5;
 }
 
 @font-face{
