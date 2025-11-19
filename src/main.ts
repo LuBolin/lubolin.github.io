@@ -77,6 +77,11 @@ function loadContentByHash(hash: string): void {
                 if (mainElem) {
                     mainElem.innerHTML = data;
                     updateActiveNavLink('#' + contentFile);
+
+                    // Initialize Three.js scene
+                    import('../public/shangrila.ts').then(module => {
+                        module.initShangriLa();
+                    });
                 }
             })
             .catch(err => {
