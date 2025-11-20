@@ -7,7 +7,7 @@
     top: 0;
     left: 0;
     overflow: hidden;
-    background: #ff0000;
+    background: var(--background-color);
     z-index: 1;
 }
 
