@@ -1,9 +1,13 @@
 import * as THREE from 'three';
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
+// import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+
 
 const lastMousePos = {
-    x: 0,
-    y: 0
+  x: 0,
+  y: 0
 }
 
 let cameraAzimuth = 0; // Horizontal rotation angle
@@ -17,35 +21,40 @@ const camDefaultDist = 1000;
 const camMinAngle = Math.PI / 8; // 22.5 degrees from up
 const camMaxAngle = (Math.PI / 2) + (Math.PI / 8); // 90 + 22.5 = 112.5 degrees (can look slightly below horizontal)
 
-const cameraLerpFactor = 0.1;
+const cameraLerpFactor = 0.04;
 const cameraZoomSpeed = 0.1;
 const cameraRotationSpeed = 0.005; // Radians per pixel
 
 let mainCamera: THREE.PerspectiveCamera;
-let targetCameraPosition: THREE.Vector3;
+let targetCameraPosition: THREE.Vector3 = new THREE.Vector3();
+let cameraRadius = camDefaultDist;
 let leftClickHeld: boolean = false;
 
+// Environment
+const sunDirnLight: THREE.DirectionalLight = new THREE.DirectionalLight(0xffffff, 3);
+const ambientLight: THREE.AmbientLight = new THREE.AmbientLight(0xffffff, 0.5);
+
+const EAST = new THREE.Vector3(1, 0, 1).normalize();
+const dayLengthMs = 60000; // 60 seconds for a full day-night cycle
+const sceneStartTime = dayLengthMs / (24.0 / 7.0); // Start at 7 AM
+let timeOfDay = sceneStartTime / dayLengthMs; // 0 -> 12 AM, 0.5 -> 12 PM, 1.0 -> 12 AM
+let pageStartTime = Date.now() - sceneStartTime; // Initialize to sceneStartTime offset so we start at 8 AM
+
 function loadModel(url: string): Promise<THREE.Group> {
-  const fbxLoader = new FBXLoader();
+  const modelLoader = new GLTFLoader(); // FBXLoader();
+  modelLoader.setMeshoptDecoder(MeshoptDecoder);
+  const dracoLoader = new DRACOLoader();
+  dracoLoader.setDecoderPath('https://unpkg.com/three@0.160.0/examples/jsm/libs/draco/');
+  modelLoader.setDRACOLoader(dracoLoader);
+
   return new Promise((resolve, reject) => {
-    fbxLoader.load(
+    modelLoader.load(
       url,
-      (fbx) => resolve(fbx),
+      (gltf) => resolve(gltf.scene),
       undefined,
       (error) => reject(error)
     );
   });
-}
-
-function clampTargetPosition() {
-  // Clamp only the distance, not the angle (angle is already clamped via cameraPolar)
-  const distance = targetCameraPosition.length();
-  const clampedDistance = Math.max(camMinDist, Math.min(camMaxDist, distance));
-
-  // If distance needs adjustment, scale the position vector
-  if (distance !== clampedDistance) {
-    targetCameraPosition.normalize().multiplyScalar(clampedDistance);
-  }
 }
 
 export async function initShangriLa(): Promise<void> {
@@ -66,18 +75,25 @@ export async function initShangriLa(): Promise<void> {
 
   // Create scene
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x87ceeb); // Sky blue
+  const skyBlue = new THREE.Color(0x87ceeb);
+  scene.background = skyBlue;
 
 
   // Create camera
   mainCamera = new THREE.PerspectiveCamera(75, width / height, 0.1, 10000);
 
   // Set initial position using camDefaultDist
-  const initialAngle = Math.PI / 4; // 45 degrees from horizontal
-  const horizontalDist = camDefaultDist * Math.cos(initialAngle);
-  const verticalDist = camDefaultDist * Math.sin(initialAngle);
-  mainCamera.position.set(0, verticalDist, horizontalDist);
-  targetCameraPosition = mainCamera.position.clone();
+  const initialPitch = (Math.PI / 2.0) * 0.8; // 80% away from the vertical
+  const initialYaw = - (Math.PI / 2.0) * 0.7; // 70% towards -X axis from +Z axis
+  cameraAzimuth = initialYaw;
+  cameraPolar = initialPitch;
+  cameraRadius = camDefaultDist;
+  const initialRadius = cameraRadius * 1.2; // Start slightly further out
+  mainCamera.position.set(
+    initialRadius * Math.sin(cameraPolar) * Math.sin(cameraAzimuth),
+    initialRadius * Math.cos(cameraPolar),
+    initialRadius * Math.sin(cameraPolar) * Math.cos(cameraAzimuth),
+  );
   mainCamera.lookAt(0, 0, 0);
 
 
@@ -87,11 +103,7 @@ export async function initShangriLa(): Promise<void> {
 
 
   // Add lighting
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-  directionalLight.position.set(0, 10, 0); // Top-down light
-  scene.add(directionalLight);
-
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Soft ambient light
+  scene.add(sunDirnLight);
   scene.add(ambientLight);
 
   // Add axis helpers (500 unit length)
@@ -104,8 +116,14 @@ export async function initShangriLa(): Promise<void> {
 
   // Load 3D model
   try {
-    const islandModel = await loadModel('/assets/models/lighthouse_island.fbx');
+    // const islandModel = await loadModel('/assets/models/lighthouse_island.fbx');
+    const islandModel = await loadModel('/assets/models/island_hunyuan3d.glb');
     console.log('Model loaded successfully', islandModel);
+
+    // resize for better visibility
+    const tempSize = (new THREE.Box3().setFromObject(islandModel)).getSize(new THREE.Vector3());
+    const scalingFactor = 0.8 * camDefaultDist / Math.max(tempSize.x, tempSize.y, tempSize.z);
+    islandModel.scale.setScalar(scalingFactor);
 
     // Calculate bounding box to understand model size
     const box = new THREE.Box3().setFromObject(islandModel);
@@ -114,7 +132,6 @@ export async function initShangriLa(): Promise<void> {
 
     console.log('Model size:', size);
     console.log('Model center:', center);
-
     // Center the model at the origin
     islandModel.position.set(-center.x, -center.y, -center.z);
 
@@ -165,35 +182,78 @@ export async function initShangriLa(): Promise<void> {
 
     const delta = event.deltaY > 0 ? 1 + cameraZoomSpeed : 1 - cameraZoomSpeed;
 
-    // Scale target camera position (zooming in/out from origin)
-    targetCameraPosition.multiplyScalar(delta);
+    cameraRadius *= delta;
+    cameraRadius = Math.max(camMinDist, Math.min(camMaxDist, cameraRadius));
 
-    clampTargetPosition();
   }, { passive: false })
+
+
+  function animateCamera() {
+    // target position from spherical coords
+    targetCameraPosition.set(
+      cameraRadius * Math.sin(cameraPolar) * Math.sin(cameraAzimuth),
+      cameraRadius * Math.cos(cameraPolar),
+      cameraRadius * Math.sin(cameraPolar) * Math.cos(cameraAzimuth),
+    );
+
+    // smooth move current -> target
+    mainCamera.position.lerp(targetCameraPosition, cameraLerpFactor);
+    mainCamera.lookAt(0, 0, 0);
+  }
+
+  function animateAmbientLight() {
+    // ambient brightness based on timeOfDay. 1.0 at noon, 0.2 at night
+    const ambientIntensity = 0.2 + 0.8 * Math.max(0, Math.cos((timeOfDay - 0.5) * 2 * Math.PI));
+    ambientLight.intensity = ambientIntensity;
+    // background's blue brightness to match ambient light
+    scene.background = new THREE.Color(0x000000).lerp(skyBlue, ambientIntensity);
+  }
+
+  function animateSunLight() {
+    // As time pass, rise from my "EAST" towards zenith and set towards "WEST"
+    const timeOfDayPi = timeOfDay * 2 * Math.PI;
+    const targetSunSourceDirn = new THREE.Vector3(
+      EAST.x * Math.sin(timeOfDayPi),
+      - Math.cos(timeOfDayPi),
+      EAST.z * Math.sin(timeOfDayPi)
+    ).normalize();
+
+    // set sun direction light position far away in that direction
+    const debugScale = 2000;
+    sunDirnLight.position.copy(targetSunSourceDirn.clone().multiplyScalar(debugScale));
+
+    sunDirnLight.target.position.set(0, 0, 0);
+    sunDirnLight.target.updateMatrixWorld();
+
+    const sunSphereGeom = new THREE.SphereGeometry(50, 16, 16);
+    const sunSphereMat = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+    const sunSphere = new THREE.Mesh(sunSphereGeom, sunSphereMat);
+    sunSphere.position.copy(sunDirnLight.position);
+    scene.add(sunSphere);
+
+    setTimeout(() => {
+      scene.remove(sunSphere);
+      sunSphere.geometry.dispose();
+      (sunSphere.material as THREE.Material).dispose();
+    }, 5);
+  }
 
   // Animation loop
   function animate() {
     requestAnimationFrame(animate);
 
-    // Calculate camera position from spherical coordinates
-    const distance = targetCameraPosition.length();
+    timeOfDay = ((Date.now() - pageStartTime) % dayLengthMs) / dayLengthMs;
 
-    // Spherical to Cartesian
-    targetCameraPosition.x = distance * Math.sin(cameraPolar) * Math.sin(cameraAzimuth);
-    targetCameraPosition.y = distance * Math.cos(cameraPolar);
-    targetCameraPosition.z = distance * Math.sin(cameraPolar) * Math.cos(cameraAzimuth);
+    animateCamera();
 
-    clampTargetPosition();
+    animateAmbientLight();
 
-    mainCamera.position.lerp(targetCameraPosition, cameraLerpFactor);
-
-    mainCamera.lookAt(0, 0, 0);
+    animateSunLight();
 
     renderer.render(scene, mainCamera);
   }
   animate();
 
-  
   // Handle window resizing
   window.addEventListener('resize', () => {
     const width = container.clientWidth;
