@@ -1,0 +1,10 @@
+---
+interface Props { home?: boolean }
+const { home = false } = Astro.props;
+---
+
+<footer class:list={['site-footer px-4 py-5 text-muted', { 'site-footer--home': home, 'mt-auto': !home }] }>
+  <div class="mx-auto flex w-full max-w-[64rem] justify-center">
+    <p class="m-0 text-sm">© {new Date().getFullYear()} Bloin</p>
+  </div>
+</footer>

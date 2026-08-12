@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About" description="About Bloin: making things, hobbies, and education.">
+  <div class="page-shell profile-page">
+    <header class="profile-intro">
+      <p class="home-eyebrow">About</p>
+      <h1>Hi, I am Bloin.</h1>
+      <p>I make games and other projects. I like taking an idea and working on it until it becomes something real.</p>
+    </header>
+    <div class="profile-grid">
+      <section class="profile-card profile-card--making">
+        <p class="home-eyebrow">Making</p>
+        <h2>Games & other projects</h2>
+        <p>Games and other projects are where most of my ideas take shape.</p>
+        <a href="/projects/">See what I’ve made →</a>
+      </section>
+      <section class="profile-card">
+        <p class="home-eyebrow">Hobbies</p>
+        <h2>Gaming, skating & bouldering</h2>
+        <p>I’m gaming again, and when I’m not at a screen I’m probably skating or bouldering.</p>
+      </section>
+      <section class="profile-card profile-card--education">
+        <p class="home-eyebrow">Education</p>
+        <h2>Computer Science</h2>
+        <p>National University of Singapore · Year 4</p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

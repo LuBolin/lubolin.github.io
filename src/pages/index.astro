@@ -1,0 +1,122 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Portal from '../components/Portal.astro';
+import { assertUniqueContent, formatDate, publishedPosts } from '../lib/content';
+
+const allPosts = await getCollection('blog');
+assertUniqueContent(allPosts);
+const posts = publishedPosts(allPosts).slice(0, 3);
+const selectedProjectIds = ['dan', 'wobbly-waddlers', 'unstable-isle', 'cave-diver'];
+const allProjects = await getCollection('projects');
+const projectById = new Map(allProjects.map((project) => [project.id, project]));
+const projects = selectedProjectIds.map((id) => {
+  const project = projectById.get(id);
+  if (!project) throw new Error(`Selected project "${id}" was not found`);
+  return project;
+});
+const contactLinks = [
+  ['Email', 'bolin8621@gmail.com', 'mailto:bolin8621@gmail.com'],
+  ['Itch.io', 'bolin8621.itch.io', 'https://bolin8621.itch.io'],
+  ['GitHub', '@lubolin', 'https://www.github.com/lubolin'],
+  ['Instagram', '@bolin_ok_can', 'https://www.instagram.com/bolin_ok_can'],
+  ['LinkedIn', 'Bolin Lu', 'https://www.linkedin.com/in/bolin-lu'],
+];
+---
+
+<BaseLayout description="Bloin makes games and other projects.">
+  <Fragment slot="head">
+    <script is:inline>
+      (() => {
+        const hash = location.hash;
+        if (!hash.startsWith('#/')) return;
+        const routes = new Map([
+          ['#/home', '/'],
+          ['#/about', '/about/'],
+          ['#/projects', '/projects/'],
+          ['#/blog', '/blog/'],
+          ['#/contact', '/contact/'],
+          ['#/others', '/others/'],
+          ['#/translation-telephone', '/translation-telephone/'],
+          ['#/shangrila', '/shangrila/'],
+        ]);
+        let target = routes.get(hash);
+        if (!target && hash.startsWith('#/post/')) {
+          try {
+            const slug = decodeURIComponent(hash.slice('#/post/'.length));
+            if (/^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(slug)) target = `/blog/${slug}/`;
+          } catch {}
+        }
+        if (target) location.replace(`${target}${location.search}`);
+      })();
+    </script>
+  </Fragment>
+
+  <div class="home-page">
+    <div class="home-dashboard">
+    <section class="home-panel home-about" aria-labelledby="about-home">
+      <p class="home-eyebrow">About</p>
+      <h2 id="about-home">Game developer, and more</h2>
+      <p>I make things: games, food, and whatever else feels worth figuring out.</p>
+      <div class="home-about__links">
+        <a href="/about/">More about me →</a>
+      </div>
+    </section>
+
+    <a class="home-entry home-entry--portal" href="/shangrila/" aria-label="Enter Shangri-La">
+      <Portal />
+    </a>
+
+    <section class="home-panel home-writing" aria-labelledby="latest-posts">
+      <header class="home-section__header">
+        <p class="home-eyebrow">Writing</p>
+        <h2 id="latest-posts">Latest posts</h2>
+        <a href="/blog/">All posts</a>
+      </header>
+      <ol class="editorial-list">
+        {posts.map(({ data }) => (
+          <li>
+            <a href={`/blog/${data.slug}/`}>
+              <h3>{data.title}</h3>
+              <time datetime={data.published.toISOString()}>{formatDate(data.published)}</time>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="home-panel home-work" aria-labelledby="selected-work">
+      <header class="home-section__header">
+        <p class="home-eyebrow">Selected work</p>
+        <h2 id="selected-work">Projects</h2>
+        <a href="/projects/">See all projects</a>
+      </header>
+      <div class="work-grid">
+        {projects.map(({ data }, index) => (
+          <a class="work-card" href={data.url} target={data.url.startsWith('http') ? '_blank' : undefined} rel={data.url.startsWith('http') ? 'noopener noreferrer' : undefined}>
+            <Image src={data.image} alt={data.imageAlt} widths={[240, 480]} sizes="(max-width: 700px) 50vw, 240px" priority={index === 0} />
+            <h3>{data.title}</h3>
+            <p>{data.tags.slice(0, 2).join(' · ')}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="home-panel home-contact" aria-labelledby="find-me">
+      <header class="home-contact__header">
+        <p class="home-eyebrow">Contact</p>
+        <h2 id="find-me">Find me</h2>
+      </header>
+      <div class="home-contact__grid">
+        {contactLinks.map(([label, detail, href]) => (
+          <a href={href} target={href.startsWith('mailto:') ? undefined : '_blank'} rel={href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}>
+            <span>{label}</span>
+            <strong>{detail}</strong>
+          </a>
+        ))}
+      </div>
+    </section>
+    </div>
+  </div>
+</BaseLayout>

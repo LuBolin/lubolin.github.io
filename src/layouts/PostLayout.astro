@@ -1,0 +1,33 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Giscus from '../components/Giscus.astro';
+import { formatDate } from '../lib/content';
+import '../styles/post.css';
+
+interface Props {
+  title: string;
+  description: string;
+  published: Date;
+  tags: string[];
+  slug: string;
+}
+const { title, description, published, tags, slug } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} canonicalPath={`/blog/${slug}/`}>
+  <article class="post-shell">
+    <header class="post-header">
+      <p class="m-0 text-sm font-bold uppercase tracking-[.16em] text-primary">Post</p>
+      <h1>{title}</h1>
+      <p class="m-0 text-lg">{description}</p>
+      <div class="post-meta mt-4">
+        <time datetime={published.toISOString()}>{formatDate(published)}</time>
+        <ul class="tag-list m-0">
+          {tags.map((tag) => <li><a class="tag no-underline hover:underline" href={`/tags/${tag.trim().toLowerCase().replace(/\s+/g, '-')}/`}>{tag}</a></li>)}
+        </ul>
+      </div>
+    </header>
+    <div class="post-content"><slot /></div>
+    <Giscus slug={slug} />
+  </article>
+</BaseLayout>

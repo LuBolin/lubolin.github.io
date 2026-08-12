@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page not found" description="The requested page could not be found." robots="noindex">
+  <div class="page-shell grid min-h-[55vh] place-content-center text-center">
+    <p class="m-0 text-sm font-bold uppercase tracking-[.18em] text-primary">404</p>
+    <h1 class="page-heading">Lost between tiles?</h1>
+    <p class="mx-auto max-w-xl text-lg">That page is not here. The homepage, projects, and blog are good places to continue.</p>
+    <nav class="mt-4 flex flex-wrap justify-center gap-3" aria-label="Not found suggestions"><a class="button" href="/">Home</a><a class="button button-secondary" href="/projects/">Projects</a><a class="button button-secondary" href="/blog/">Blog</a></nav>
+  </div>
+</BaseLayout>

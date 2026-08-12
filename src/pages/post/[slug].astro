@@ -1,0 +1,18 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { assertUniqueContent, publishedPosts } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  assertUniqueContent(allPosts);
+  return publishedPosts(allPosts).map((post) => ({ params: { slug: post.data.slug }, props: { post } }));
+}
+const { post } = Astro.props;
+const target = `/blog/${post.data.slug}/`;
+---
+
+<BaseLayout title="Post moved" description={`This post now lives at ${target}`} robots="noindex" canonicalPath={target}>
+  <Fragment slot="head"><script is:inline define:vars={{ target }}>location.replace(target + location.search);</script></Fragment>
+  <div class="page-shell max-w-2xl text-center"><h1 class="page-heading">This post moved.</h1><p>If you are not redirected, <a href={target}>continue to “{post.data.title}”</a>.</p></div>
+</BaseLayout>

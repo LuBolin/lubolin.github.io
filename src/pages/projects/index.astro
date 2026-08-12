@@ -1,0 +1,46 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Reorder this list to change the order on the My Projects page.
+const projectIds = [
+  'dan',
+  'wobbly-waddlers',
+  'unstable-isle',
+  'cave-diver',
+  'quackerman',
+  'monkis-together',
+  'dont-make-eye-contact',
+  'running-man',
+];
+const allProjects = await getCollection('projects');
+const projectById = new Map(allProjects.map((project) => [project.id, project]));
+if (new Set(projectIds).size !== projectIds.length || projectIds.some((id) => !projectById.has(id))) {
+  throw new Error('My Projects list contains a duplicate or unknown project filename');
+}
+const projects = projectIds.map((id) => projectById.get(id)!);
+---
+
+<BaseLayout title="Projects" description="Games and other projects made by Bloin.">
+  <div class="page-shell">
+    <h1 class="page-heading">My Projects</h1>
+    <p class="page-lede">Games, jam entries, class projects, and other projects.</p>
+    <div class="card-grid">
+      {projects.map(({ data }, index) => (
+        <a class="project-card ridge-card flex min-w-0 flex-col" href={data.url} target={data.url.startsWith('http') ? '_blank' : undefined} rel={data.url.startsWith('http') ? 'noopener noreferrer' : undefined}>
+          <Image class="aspect-video w-full object-cover" src={data.image} alt={data.imageAlt} widths={[360, 720]} sizes="(max-width: 700px) 100vw, 360px" priority={index === 0} />
+          <div class="flex flex-1 flex-col p-5">
+            <h2 class="m-0 text-2xl leading-tight">{data.title}</h2>
+            <ul class="tag-list my-3">{data.tags.map((tag) => <li class="tag">{tag}</li>)}</ul>
+            <div class="space-y-2">{data.description.map((paragraph) => <p class="m-0">{paragraph}</p>)}</div>
+            <div class="mt-auto pt-5 text-sm text-muted">
+              {data.context && <p class="m-0">{data.context}</p>}
+              {data.result && <p class="m-0 font-bold text-text">{data.result}</p>}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

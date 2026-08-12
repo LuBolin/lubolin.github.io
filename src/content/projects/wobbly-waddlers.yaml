@@ -1,0 +1,11 @@
+title: Wobbly Waddlers
+url: https://bolin8621.itch.io/wobbly-waddlers
+image: ../../assets/images/projects/wobbly-waddlers.png
+imageAlt: Wobbly Waddlers
+tags: [Game, Puzzle, Physics, Godot]
+description:
+  - Single player puzzle game with physics-based mechanics.
+  - Hatch all your eggs before the fountain topples!
+  - Inspired by snake, sokoban and tricky towers.
+context: Made for Hack&Roll 2025 in 24 hrs.
+result: Top 9

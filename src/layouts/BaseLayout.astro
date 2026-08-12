@@ -1,0 +1,70 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  robots?: string;
+  mainClass?: string;
+  canonicalPath?: string;
+}
+
+const {
+  title = 'Bloin',
+  description = 'Bloin makes games and other projects.',
+  image = '/assets/images/self.jpg',
+  robots,
+  mainClass = '',
+  canonicalPath = Astro.url.pathname,
+} = Astro.props;
+const pageTitle = title === 'Bloin' ? title : `${title} · Bloin`;
+const canonical = new URL(canonicalPath, Astro.site);
+const ogImage = new URL(image, Astro.site);
+const isHome = Astro.url.pathname === '/';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    {robots && <meta name="robots" content={robots} />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+    <link rel="alternate" type="application/rss+xml" title="Bloin's blog" href="/rss.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <title>{pageTitle}</title>
+    <ClientRouter />
+    <script is:inline>
+      (() => {
+        const resolveTheme = () => {
+          try {
+            const saved = localStorage.getItem('theme');
+            return saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          } catch {
+            return 'light';
+          }
+        };
+        const applyTheme = (documentElement) => { documentElement.dataset.theme = resolveTheme(); };
+        applyTheme(document.documentElement);
+        document.addEventListener('astro:before-swap', (event) => applyTheme(event.newDocument.documentElement));
+      })();
+    </script>
+    <slot name="head" />
+  </head>
+  <body transition:animate="none" class:list={['site-frame', { 'home-frame': isHome }] }>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <Header path={Astro.url.pathname} />
+    <main id="main-content" class:list={[mainClass, 'flex-1']}><slot /></main>
+    <Footer home={isHome} />
+  </body>
+</html>

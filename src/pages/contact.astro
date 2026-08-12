@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const contact = [
+  ['Email', 'bolin8621@gmail.com', 'mailto:bolin8621@gmail.com'],
+  ['Itch.io', 'Games & other projects', 'https://bolin8621.itch.io'],
+  ['GitHub', '@lubolin', 'https://www.github.com/lubolin'],
+  ['Instagram', '@bolin_ok_can', 'https://www.instagram.com/bolin_ok_can'],
+  ['LinkedIn', 'Bolin Lu', 'https://www.linkedin.com/in/bolin-lu'],
+];
+const friends = [
+  ['Bacen', 'https://bacenl.github.io/'],
+  ['BlazeChron', 'https://blazechron.github.io/'],
+  ['UltimateHG', 'https://blog.uhg.sg/'],
+];
+---
+
+<BaseLayout title="Contact" description="Contact Bloin and visit some friends.">
+  <div class="page-shell contact-page">
+    <header class="contact-intro">
+      <p class="home-eyebrow">Contact</p>
+      <h1>Say hello.</h1>
+      <p>Feel free to reach out for anything.</p>
+    </header>
+    <section class="contact-grid" aria-label="Ways to contact Bloin">
+      {contact.map(([label, detail, href], index) => (
+        <a class:list={['contact-card', { 'contact-card--primary': index === 0 }]} href={href} target={href.startsWith('mailto:') ? undefined : '_blank'} rel={href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}>
+          <span>{label}</span><strong>{detail}</strong>
+        </a>
+      ))}
+    </section>
+    <section class="friends-strip" aria-labelledby="friends-title">
+      <div><h2 id="friends-title">Some friends</h2></div>
+      <nav aria-label="Friends">
+        {friends.map(([label, href]) => <a href={href} target="_blank" rel="noopener noreferrer">{label} ↗</a>)}
+      </nav>
+    </section>
+  </div>
+</BaseLayout>

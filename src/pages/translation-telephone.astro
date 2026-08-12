@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const languages = [
+  ['en', 'English'], ['zh-CN', 'Chinese (Simplified)'], ['zh-TW', 'Chinese (Traditional)'], ['es', 'Spanish'],
+  ['fr', 'French'], ['de', 'German'], ['it', 'Italian'], ['ja', 'Japanese'], ['ko', 'Korean'], ['pt', 'Portuguese'],
+  ['ru', 'Russian'], ['ar', 'Arabic'], ['hi', 'Hindi'], ['tr', 'Turkish'], ['pl', 'Polish'], ['nl', 'Dutch'],
+  ['sv', 'Swedish'], ['da', 'Danish'], ['no', 'Norwegian'], ['fi', 'Finnish'], ['el', 'Greek'], ['he', 'Hebrew'],
+  ['th', 'Thai'], ['vi', 'Vietnamese'], ['id', 'Indonesian'], ['ms', 'Malay'],
+];
+---
+
+<BaseLayout title="Translation Telephone" description="See how text transforms when translated back and forth." robots="noindex">
+  <div class="page-shell max-w-4xl" data-translation-telephone>
+    <h1 class="page-heading">Translation Telephone</h1>
+    <p class="page-lede">See how text transforms when translated back and forth.</p>
+
+    <form class="ridge-card grid gap-5 p-5 sm:p-7" data-translation-form novalidate>
+      <label class="grid gap-2 font-bold" for="loop-count">Number of loops
+        <input class="min-h-12 rounded-lg border border-accent bg-white px-3 font-normal" type="number" id="loop-count" min="1" max="20" value="5" inputmode="numeric" />
+      </label>
+
+      <fieldset class="grid gap-3 border-0 p-0">
+        <legend class="mb-2 font-bold">Languages</legend>
+        <div class="grid items-center gap-3 sm:grid-cols-[1fr_auto_1fr]">
+          <label class="sr-only" for="source-language">Source language</label>
+          <select class="min-h-12 min-w-0 rounded-lg border border-accent bg-white px-3" id="source-language">
+            {languages.map(([value, label]) => <option value={value}>{label}</option>)}
+          </select>
+          <span class="text-center text-2xl text-primary" aria-hidden="true">⟷</span>
+          <label class="sr-only" for="target-language">Target language</label>
+          <select class="min-h-12 min-w-0 rounded-lg border border-accent bg-white px-3" id="target-language">
+            {languages.map(([value, label], index) => <option value={value} selected={index === 1}>{label}</option>)}
+          </select>
+        </div>
+      </fieldset>
+
+      <label class="grid gap-2 font-bold" for="translation-input">Input text
+        <textarea class="min-h-32 resize-y rounded-lg border border-accent bg-white p-3 font-normal" id="translation-input" maxlength="500" placeholder="Enter text to translate…"></textarea>
+      </label>
+      <p class="m-0 text-right text-sm text-muted" data-character-count>0 characters</p>
+      <p class="m-0 min-h-6 rounded-lg text-sm font-bold text-text" data-translation-status role="status" aria-live="polite"></p>
+      <div class="flex flex-wrap gap-3">
+        <button class="button" type="submit" data-translate>Start Translation</button>
+        <button class="button button-secondary" type="button" data-clear>Clear</button>
+      </div>
+    </form>
+
+    <section class="mt-8 grid gap-4" data-translation-results aria-label="Translation results" aria-live="polite"></section>
+    <p class="mt-8 rounded-xl border border-border bg-white/60 p-4 text-sm text-muted" role="note">This experiment uses the public MyMemory translation API. Availability and daily quota are controlled by that third party.</p>
+  </div>
+</BaseLayout>
+
+<script>
+  import '../experiments/translation-telephone';
+</script>

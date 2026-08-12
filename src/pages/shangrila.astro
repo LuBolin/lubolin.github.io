@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Shangri-La" description="Explore Bloin's floating-island Three.js experiment." mainClass="relative bg-[#87ceeb]">
+  <section class="relative min-h-[calc(100svh-4.1rem)] overflow-hidden" data-shangrila>
+    <canvas class="absolute inset-0 h-full w-full touch-none" id="shangrila-canvas" aria-label="Interactive 3D floating island"></canvas>
+    <div class="pointer-events-none absolute inset-0 grid place-items-center bg-primary/85 p-6 text-center text-white" data-shangrila-status role="status">
+      <div><p class="m-0 text-sm font-bold uppercase tracking-[.18em]">Shangri-La</p><p class="mt-2 text-xl" data-shangrila-message>Loading the island…</p></div>
+    </div>
+    <div class="absolute left-4 top-4 flex flex-wrap gap-2">
+      <a class="button button-light shadow-lg" href="/">← Back home</a>
+      <p class="m-0 rounded-full bg-black/55 px-4 py-3 text-sm text-white">Drag to orbit · scroll to zoom</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import '../experiments/shangrila';
+</script>

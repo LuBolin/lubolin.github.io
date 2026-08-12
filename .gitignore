@@ -19,9 +19,11 @@ build/
 # Environment files
 .env
 .env.*
+!.env.example
 
 # Node modules
 node_modules/
+.astro/
 dist/
 *.log
 

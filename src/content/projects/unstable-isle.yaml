@@ -1,0 +1,10 @@
+title: Unstable Isle
+url: https://blazechron.itch.io/unstable-isle
+image: ../../assets/images/projects/unstable-isle.png
+imageAlt: Unstable Isle
+tags: [Game, Online Multiplayer, Godot]
+description:
+  - Online multiplayer PvP inspired by "Crumbling Island Arena".
+  - Battle others on a destructible island in the sky.
+  - Server-client model with client side prediction & server side reconciliation.
+context: Made during NUS Orbital 2024.
