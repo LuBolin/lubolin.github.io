@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Noto+Sans+SC:wght@400;500;600;700;800&family=ZCOOL+KuaiLe&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -10,8 +11,8 @@
   --color-accent: #9d704e;
   --color-muted: #6d635a;
   --color-border: #c3ced4;
-  --font-sans: Verdana, sans-serif;
-  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans: "ZCOOL KuaiLe", sans-serif;
+  --font-serif: "ZCOOL KuaiLe", sans-serif;
 }
 
 html[data-theme="dark"] {
