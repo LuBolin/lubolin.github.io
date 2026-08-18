@@ -8,6 +8,9 @@ desktop.ini
 
 # AI assistant files
 .claude/
+.codegraph/
+.omo/
+.playwright-mcp/
 
 # Logs
 *.log
@@ -24,8 +27,6 @@ build/
 # Node modules
 node_modules/
 .astro/
-dist/
-*.log
 
 # Others
 .ini
