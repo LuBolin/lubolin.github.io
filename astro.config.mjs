@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import { satteri } from '@astrojs/markdown-satteri';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import { markdownLayoutDirectives } from './src/lib/markdown-layouts.js';
+import { markdownLayoutDirectives, markdownLineSpacing } from './src/lib/markdown-layouts.js';
 
 export default defineConfig({
   site: 'https://lubolin.github.io',
@@ -10,7 +10,7 @@ export default defineConfig({
   markdown: {
     processor: satteri({
       features: { directive: true },
-      mdastPlugins: [markdownLayoutDirectives],
+      mdastPlugins: [markdownLayoutDirectives, markdownLineSpacing],
     }),
   },
   integrations: [sitemap({
