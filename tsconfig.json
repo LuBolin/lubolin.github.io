@@ -7,7 +7,6 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "types": ["@webgpu/types"],
     "noUnusedLocals": true,
     "noUnusedParameters": true
   }

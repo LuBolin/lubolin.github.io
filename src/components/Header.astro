@@ -34,14 +34,6 @@ const isActive = (href: string) => href === '/' ? path === '/' : path.startsWith
         </ul>
       </nav>
     )}
-    {/*
-    {isHome && (
-      <aside class="home-quote">
-        <blockquote>“No man needs a vacation so much as the man who has just had one.”</blockquote>
-        <cite>Elbert Hubbard</cite>
-      </aside>
-    )}
-    */}
     <nav class:list={[{ 'home-primary-nav': isHome }]} aria-label="Primary navigation">
       <ul class="site-nav">
         {links.map(([href, label]) => (

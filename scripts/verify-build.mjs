@@ -26,7 +26,7 @@ const required = [
   'index.html', 'about/index.html', 'projects/index.html', 'blog/index.html', 'contact/index.html',
   'others/index.html', 'translation-telephone/index.html', 'shangrila/index.html', '404.html', 'rss.xml',
   'sitemap-index.xml', 'robots.txt', '.nojekyll',
-  'assets/models/island_hunyuan3d.glb', 'assets/images/portal-orb.webp',
+  'assets/models/island_hunyuan3d.glb',
 ];
 for (const path of required) assert(await exists(join(dist, path)), `Missing dist/${path}`);
 
