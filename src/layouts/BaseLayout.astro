@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
+import selfPortrait from '@/assets/images/self.jpg';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
@@ -16,7 +17,7 @@ interface Props {
 const {
   title = 'Bloin',
   description = 'Bloin makes games and other projects.',
-  image = '/assets/images/self.jpg',
+  image = selfPortrait.src,
   robots,
   mainClass = '',
   canonicalPath = Astro.url.pathname,
@@ -35,7 +36,7 @@ const isHome = Astro.url.pathname === '/';
     <meta name="description" content={description} />
     {robots && <meta name="robots" content={robots} />}
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="alternate" type="application/rss+xml" title="Bloin's blog" href="/rss.xml" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={pageTitle} />

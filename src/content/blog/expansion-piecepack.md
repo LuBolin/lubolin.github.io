@@ -43,10 +43,9 @@ A standard **Piecepack** consists of:
 
 > **Note:** Tile and coin values are not used for setup but are revealed during combat.
 
-<figure style="text-align: center; margin: 2em 0;">
-  <img src="/assets/blog/expansion-piecepack/equipment.png" alt="A Standard Piecepack" style="width:80%; height:auto; display:block; margin: 0 auto;">
-  <figcaption>Figure 1. A Standard Piecepack.</figcaption>
-</figure>
+![A Standard Piecepack](../../assets/blog/expansion-piecepack/equipment.png)
+
+*Figure 1. A Standard Piecepack.*
 
 ## Setup
 
@@ -71,10 +70,9 @@ Each player places their **6 coins (minions)** suit-side up, forming a **triangl
 
 > Players should remember each coin's numeric value but cannot peek once play begins.
 
-<figure style="text-align: center; margin: 2em 0;">
-  <img src="/assets/blog/expansion-piecepack/setup2.png" alt="Initial Setup" style="width:80%; height:auto; display:block; margin: 0 auto;">
-  <figcaption>Figure 2. Initial Setup.</figcaption>
-</figure>
+![Initial Setup](../../assets/blog/expansion-piecepack/setup2.png)
+
+*Figure 2. Initial Setup.*
 
 ### 4. Determine First Player
 
@@ -99,43 +97,33 @@ A minion can move in one of two ways:
 
 > On the first move (not first turn) of the game, jumping is not allowed.
 
-<figure style="text-align:center; margin: 2em 0;">
+::::columns
+:::column
+**First player's first move**
 
-  <!-- Column headers -->
-  <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap; font-weight:bold; margin-bottom:4px;">
-    <div style="width:45%;">First player's first move</div>
-    <div style="width:45%;">All subsequent moves</div>
-  </div>
+![First move legal](../../assets/blog/expansion-piecepack/legal_0.png)
 
-  <!-- First row: legal moves -->
-  <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
-    <div style="width:45%;">
-      <img src="/assets/blog/expansion-piecepack/legal_0.png" alt="First move legal" style="width:100%; height:auto; display:block; margin:0 auto;">
-      <figcaption style="font-size:0.9em; color:var(--text-muted); margin-top:4px;">(a) First move: legal</figcaption>
-    </div>
-    <div style="width:45%;">
-      <img src="/assets/blog/expansion-piecepack/legal_1.png" alt="Subsequent legal" style="width:100%; height:auto; display:block; margin:0 auto;">
-      <figcaption style="font-size:0.9em; color:var(--text-muted); margin-top:4px;">(b) Subsequent moves: legal</figcaption>
-    </div>
-  </div>
+*(a) First move: legal*
 
-  <!-- Second row: illegal moves -->
-  <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:10px;">
-    <div style="width:45%;">
-      <img src="/assets/blog/expansion-piecepack/illegal_0.png" alt="First move illegal" style="width:100%; height:auto; display:block; margin:0 auto;">
-      <figcaption style="font-size:0.9em; color:var(--text-muted); margin-top:4px;">(c) First move: illegal</figcaption>
-    </div>
-    <div style="width:45%;">
-      <img src="/assets/blog/expansion-piecepack/illegal_1.png" alt="Subsequent illegal" style="width:100%; height:auto; display:block; margin:0 auto;">
-      <figcaption style="font-size:0.9em; color:var(--text-muted); margin-top:4px;">(d) Subsequent moves: illegal</figcaption>
-    </div>
-  </div>
+![First move illegal](../../assets/blog/expansion-piecepack/illegal_0.png)
 
-  <!-- Overall caption -->
-  <figcaption style="margin-top:8px;">
-    Figure 3. Comparison of legal (green arrows) and illegal (red arrows) moves for the first move and subsequent moves.
-  </figcaption>
-</figure>
+*(c) First move: illegal*
+:::
+
+:::column
+**All subsequent moves**
+
+![Subsequent legal](../../assets/blog/expansion-piecepack/legal_1.png)
+
+*(b) Subsequent moves: legal*
+
+![Subsequent illegal](../../assets/blog/expansion-piecepack/illegal_1.png)
+
+*(d) Subsequent moves: illegal*
+:::
+::::
+
+*Figure 3. Comparison of legal (green arrows) and illegal (red arrows) moves for the first move and subsequent moves.*
 
 ### Combat
 
@@ -163,10 +151,9 @@ Mark captured tiles using:
 
 > Corner tiles begin captured since they start with 4 minions.
 
-<figure style="text-align: center; margin: 2em 0;">
-  <img src="/assets/blog/expansion-piecepack/capture_indication.png" alt="Capture Indicator Illustration" style="width:80%; height:auto; display:block; margin: 0 auto;">
-  <figcaption>Figure 4. Capture Indicator Illustration.</figcaption>
-</figure>
+![Capture Indicator Illustration](../../assets/blog/expansion-piecepack/capture_indication.png)
+
+*Figure 4. Capture Indicator Illustration.*
 
 ### Ending the Game
 
@@ -184,7 +171,7 @@ The player who controls the most captured tiles wins.
 
 ## Download
 
-[Download the complete game instructions (PDF)](/assets/blog/expansion-piecepack/expansion_instructions.pdf)
+[Download the complete game instructions (PDF)](/downloads/expansion-piecepack/instructions.pdf)
 
 ## License
 

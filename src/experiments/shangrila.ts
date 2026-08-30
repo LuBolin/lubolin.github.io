@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import islandModelUrl from '@/assets/models/island_hunyuan3d.glb?url';
 
 const mountShangriLa = () => {
   const root = document.querySelector<HTMLElement>('[data-shangrila]');
@@ -104,7 +105,7 @@ async function initialize(root: HTMLElement) {
   loader.setDRACOLoader(dracoLoader);
 
   try {
-    const modelUrl = new URLSearchParams(location.search).get('model') === 'failure' ? '/assets/models/model-load-failure.glb' : '/assets/models/island_hunyuan3d.glb';
+    const modelUrl = new URLSearchParams(location.search).get('model') === 'failure' ? '/assets/models/model-load-failure.glb' : islandModelUrl;
     const gltf = await loader.loadAsync(modelUrl);
     const model = gltf.scene;
     const originalSize = new THREE.Box3().setFromObject(model).getSize(new THREE.Vector3());

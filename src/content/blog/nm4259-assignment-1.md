@@ -15,7 +15,7 @@ This is the first assignment for NM4259 Mobile Interaction Design, AY 26/27 Seme
 I am Lu Bolin, a Computer Science student, taking this module for my IMD minor.
 Here is a photo of me, to test markdown's ability to display images.
 
-<img src="/assets/images/blog/nm4259-assignment-1/freeskating.png" alt="Freeskating~" style="width:60%; height:auto; display:block; margin: 0 auto;">
+![Freeskating~](../../assets/blog/nm4259-assignment-1/freeskating.png)
 
 # Goal of the module
 What do I want to take away from this module... Hmm...
