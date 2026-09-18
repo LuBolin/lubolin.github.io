@@ -1,0 +1,185 @@
+class NavbarPortal extends HTMLElement {
+  private canvas?: HTMLCanvasElement;
+  private gl?: WebGL2RenderingContext;
+  private program?: WebGLProgram;
+  private time?: WebGLUniformLocation;
+  private resolution?: WebGLUniformLocation;
+  private frame?: number;
+  private started = performance.now();
+  private visible = true;
+  private reducedMotion = false;
+  private resizeObserver?: ResizeObserver;
+  private intersectionObserver?: IntersectionObserver;
+  private events?: AbortController;
+
+  connectedCallback() {
+    this.canvas = this.querySelector('canvas') ?? undefined;
+    if (!this.canvas) return;
+    try {
+      this.initialize();
+      this.canvas.hidden = false;
+    } catch (error) {
+      console.warn('Portal shader fallback:', error);
+      this.canvas.hidden = true;
+    }
+  }
+
+  disconnectedCallback() {
+    this.stop();
+    this.resizeObserver?.disconnect();
+    this.intersectionObserver?.disconnect();
+    this.events?.abort();
+    if (this.gl && this.program) this.gl.deleteProgram(this.program);
+  }
+
+  private initialize() {
+    const gl = this.canvas?.getContext('webgl2', { alpha: true, antialias: true });
+    if (!gl || !this.canvas) throw new Error('WebGL 2 is unavailable');
+    this.gl = gl;
+    const vertex = this.compile(gl.VERTEX_SHADER, `#version 300 es
+      in vec2 position;
+      void main() { gl_Position = vec4(position, 0.0, 1.0); }`);
+    const fragment = this.compile(gl.FRAGMENT_SHADER, `#version 300 es
+      precision highp float;
+      uniform vec2 resolution;
+      uniform float time;
+      out vec4 color;
+
+      float hash(vec2 p) {
+        return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+      }
+
+      float noise(vec2 p) {
+        vec2 cell = floor(p);
+        vec2 f = fract(p);
+        f = f * f * (3.0 - 2.0 * f);
+        return mix(mix(hash(cell), hash(cell + vec2(1.0, 0.0)), f.x),
+                   mix(hash(cell + vec2(0.0, 1.0)), hash(cell + 1.0), f.x), f.y);
+      }
+
+      vec3 portal(vec2 p) {
+        float radius = length(p);
+        float angle = radius > 0.001 ? atan(p.y, p.x) : 0.0;
+        // Noise travels with the spiral, preserving its continuous inward flow.
+        float depth = log(max(radius, 0.025)) + time * 0.16;
+        float turn = angle + time * 0.09; // Clockwise in screen space.
+        vec2 flow = vec2(cos(turn), sin(turn)) * 1.8 + depth * 0.7;
+        float mist = noise(flow);
+        float warp = (mist - 0.5) * 2.6 + 0.7 * sin(depth * 2.1 + sin(turn * 2.0));
+        float spiral = 0.5 + 0.5 * sin(turn * 5.0 + depth * 3.8 + warp);
+        float threads = pow(spiral, 1.6) * (0.45 + 0.55 * noise(flow * 2.3 + 4.7));
+        float ripples = pow(0.5 + 0.5 * sin(depth * 8.0 + warp * 1.5), 2.5);
+        float fade = smoothstep(0.04, 0.18, radius) / (1.0 + radius * 0.25);
+        vec3 rgb = vec3(0.04, 0.125, 0.105);
+        rgb += vec3(0.045, 0.12, 0.085) * exp(-radius * 0.8);
+        rgb += mix(vec3(0.11, 0.25, 0.185), vec3(0.16, 0.29, 0.25), smoothstep(0.48, 0.82, mist)) * threads * fade;
+        rgb += vec3(0.045, 0.085, 0.065) * (ripples * fade + mist * 0.35);
+        return rgb;
+      }
+
+      void main() {
+        float scale = min(resolution.x, resolution.y);
+        vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / scale;
+        vec2 inset = resolution / scale - abs(p);
+        float edge = 1.0 - smoothstep(0.08, 0.55, min(inset.x, inset.y));
+        // Dissolve fine curls into a smooth core rather than blurring them together.
+        float center = 1.0 - smoothstep(0.12, 0.48, length(p));
+        float blur = 0.008 + edge * 0.075;
+        vec3 rgb = portal(p) * 0.4;
+        rgb += portal(p + vec2(blur, blur)) * 0.15;
+        rgb += portal(p + vec2(-blur, blur)) * 0.15;
+        rgb += portal(p + vec2(blur, -blur)) * 0.15;
+        rgb += portal(p - vec2(blur, blur)) * 0.15;
+        vec3 haze = vec3(0.115, 0.285, 0.215) + vec3(0.07, 0.105, 0.075) * exp(-dot(p, p) * 12.0);
+        rgb = mix(rgb, haze, center);
+        // A broad celadon glow suggests light beyond the opening.
+        rgb = mix(rgb, vec3(0.48, 0.75, 0.58), exp(-dot(p, p) * 6.0) * 0.5);
+        color = vec4(rgb, 1.0);
+      }`);
+    const program = gl.createProgram();
+    if (!program) throw new Error('Could not create portal shader');
+    gl.attachShader(program, vertex);
+    gl.attachShader(program, fragment);
+    gl.bindAttribLocation(program, 0, 'position');
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program) ?? 'Portal shader link failed');
+    this.program = program;
+    this.time = gl.getUniformLocation(program, 'time') ?? undefined;
+    this.resolution = gl.getUniformLocation(program, 'resolution') ?? undefined;
+
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(0);
+    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+    gl.useProgram(program);
+    this.events = new AbortController();
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    this.reducedMotion = motion.matches;
+    motion.addEventListener('change', (event) => {
+      this.reducedMotion = event.matches;
+      this.sync();
+    }, { signal: this.events.signal });
+    document.addEventListener('visibilitychange', () => this.sync(), { signal: this.events.signal });
+    this.resizeObserver = new ResizeObserver(() => this.resize());
+    this.resizeObserver.observe(this);
+    this.intersectionObserver = new IntersectionObserver(([entry]) => {
+      this.visible = entry.isIntersecting;
+      this.sync();
+    });
+    this.intersectionObserver.observe(this);
+    this.resize();
+    this.sync();
+  }
+
+  private compile(type: number, source: string) {
+    const shader = this.gl?.createShader(type);
+    if (!this.gl || !shader) throw new Error('Could not create portal shader');
+    this.gl.shaderSource(shader, source);
+    this.gl.compileShader(shader);
+    if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) throw new Error(this.gl.getShaderInfoLog(shader) ?? 'Portal shader compile failed');
+    return shader;
+  }
+
+  private resize() {
+    if (!this.canvas || !this.gl) return;
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    const width = Math.max(1, Math.round(this.clientWidth * dpr));
+    const height = Math.max(1, Math.round(this.clientHeight * dpr));
+    if (this.canvas.width !== width || this.canvas.height !== height) {
+      this.canvas.width = width;
+      this.canvas.height = height;
+      this.gl.viewport(0, 0, width, height);
+    }
+    this.stop();
+    this.draw();
+  }
+
+  private sync() {
+    if (this.visible && !document.hidden && !this.reducedMotion) {
+      if (this.frame === undefined) this.frame = requestAnimationFrame(this.draw);
+    } else {
+      this.stop();
+      if (this.reducedMotion) this.draw();
+    }
+  }
+
+  private stop() {
+    if (this.frame !== undefined) cancelAnimationFrame(this.frame);
+    this.frame = undefined;
+  }
+
+  private draw = () => {
+    this.frame = undefined;
+    if (!this.canvas || !this.gl || !this.program) return;
+    this.gl.useProgram(this.program);
+    this.gl.uniform1f(this.time ?? null, this.reducedMotion ? 0 : (performance.now() - this.started) / 1000);
+    this.gl.uniform2f(this.resolution ?? null, this.canvas.width, this.canvas.height);
+    this.gl.clearColor(0, 0, 0, 0);
+    this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+    this.gl.drawArrays(this.gl.TRIANGLES, 0, 3);
+    if (!this.reducedMotion) this.sync();
+  };
+}
+
+if (!customElements.get('navbar-portal')) customElements.define('navbar-portal', NavbarPortal);
