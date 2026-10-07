@@ -6,6 +6,7 @@ tags:
   - NM4259
   - Mobile Interaction Design
 draft: false
+archived: true
 slug: nm4259-assignment-1
 ---
 # Introduction

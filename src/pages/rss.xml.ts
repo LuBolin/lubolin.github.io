@@ -9,7 +9,7 @@ export async function GET(context: { site: URL }) {
     title: "Bloin's blog",
     description: 'Notes about game design, programming, and other ideas.',
     site: context.site,
-    items: publishedPosts(allPosts).map(({ data }) => ({
+    items: publishedPosts(allPosts, false).map(({ data }) => ({
       title: data.title,
       description: data.description,
       pubDate: data.published,

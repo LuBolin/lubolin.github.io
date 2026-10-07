@@ -5,14 +5,14 @@ import { assertUniqueContent, formatDate, publishedPosts } from '../../lib/conte
 
 const allPosts = await getCollection('blog');
 assertUniqueContent(allPosts);
-const posts = publishedPosts(allPosts, false);
+const posts = publishedPosts(allPosts, true);
 ---
 
-<BaseLayout title="Blog" description="Notes about game design, programming, and other ideas.">
+<BaseLayout title="Blog archive" description="Archived blog posts by Bloin.">
   <div class="page-shell max-w-5xl">
-    <h1 class="page-heading">Blog</h1>
-    <p class="page-lede">Notes about game design, programming, and other ideas.</p>
-    <p><a href="/blog/archive/">Browse the archive</a></p>
+    <h1 class="page-heading">Blog archive</h1>
+    <p class="page-lede">Older posts and past coursework.</p>
+    <p><a href="/blog/">Back to the blog</a></p>
     <ol class="grid list-none gap-5 p-0">
       {posts.map(({ data }) => (
         <li><article class="ridge-card p-5 sm:p-7">
@@ -24,5 +24,6 @@ const posts = publishedPosts(allPosts, false);
         </article></li>
       ))}
     </ol>
+    {posts.length === 0 && <p>No archived posts yet.</p>}
   </div>
 </BaseLayout>

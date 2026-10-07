@@ -8,16 +8,17 @@ interface Props {
   title: string;
   description: string;
   published: Date;
+  archived?: boolean;
   tags: string[];
   slug: string;
 }
-const { title, description, published, tags, slug } = Astro.props;
+const { title, description, published, archived = false, tags, slug } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description} canonicalPath={`/blog/${slug}/`}>
   <article class="post-shell">
     <header class="post-header">
-      <p class="m-0 text-sm font-bold uppercase tracking-[.16em] text-primary">Post</p>
+      <p class="m-0 text-sm font-bold uppercase tracking-[.16em] text-primary">{archived ? <a href="/blog/archive/">Archived post</a> : 'Post'}</p>
       <h1>{title}</h1>
       <p class="m-0 text-lg">{description}</p>
       <div class="post-meta mt-4">

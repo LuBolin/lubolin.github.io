@@ -17,8 +17,9 @@ for (const file of postFiles) {
   const source = await read(join(contentRoot, file));
   const slug = source.match(/^slug:\s*(.+)$/m)?.[1]?.trim();
   const draft = source.match(/^draft:\s*(.+)$/m)?.[1]?.trim() === 'true';
+  const archived = source.match(/^archived:\s*(.+)$/m)?.[1]?.trim() === 'true';
   assert(Boolean(slug), `${file} has no explicit slug`);
-  if (slug) posts.push({ slug, draft });
+  if (slug) posts.push({ slug, draft, archived });
 }
 assert(new Set(posts.map(({ slug }) => slug)).size === posts.length, 'Post slugs are not unique');
 
@@ -26,10 +27,23 @@ const required = [
   'index.html', 'about/index.html', 'projects/index.html', 'blog/index.html', 'contact/index.html',
   'others/index.html', 'translation-telephone/index.html', 'shangrila/index.html', '404.html', 'rss.xml',
   'sitemap-index.xml', 'robots.txt', '.nojekyll',
+  'blog/archive/index.html',
 ];
 for (const path of required) assert(await exists(join(dist, path)), `Missing dist/${path}`);
 
-for (const { slug, draft } of posts) {
+const blogHtml = await read(join(dist, 'blog', 'index.html'));
+const archiveHtml = await read(join(dist, 'blog', 'archive', 'index.html'));
+const indexHtml = await read(join(dist, 'index.html'));
+const rss = await read(join(dist, 'rss.xml'));
+assert(blogHtml.includes('href="/blog/archive/"'), 'Blog has no archive link');
+assert(archiveHtml.includes('href="/blog/"'), 'Archive has no link back to the blog');
+
+for (const { slug, draft, archived } of posts) {
+  const link = `href="/blog/${slug}/"`;
+  assert(blogHtml.includes(link) === (!draft && !archived), `Wrong blog visibility: ${slug}`);
+  assert(archiveHtml.includes(link) === (!draft && archived), `Wrong archive visibility: ${slug}`);
+  assert(rss.includes(`/blog/${slug}/`) === (!draft && !archived), `Wrong RSS visibility: ${slug}`);
+  if (draft || archived) assert(!indexHtml.includes(link), `Hidden post listed on homepage: ${slug}`);
   const canonicalFile = join(dist, 'blog', slug, 'index.html');
   const redirectFile = join(dist, 'post', slug, 'index.html');
   if (draft) {
@@ -42,6 +56,7 @@ for (const { slug, draft } of posts) {
   if (await exists(canonicalFile)) {
     const html = await read(canonicalFile);
     assert(html.includes(`https://lubolin.github.io/blog/${slug}/`), `Wrong canonical URL for ${slug}`);
+    if (archived) assert(html.includes('href="/blog/archive/"'), `Archived post has no archive link: ${slug}`);
   }
   if (await exists(redirectFile)) {
     const html = await read(redirectFile);
@@ -50,14 +65,13 @@ for (const { slug, draft } of posts) {
   }
 }
 
-const indexHtml = await read(join(dist, 'index.html'));
 for (const legacyHash of ['#/home', '#/about', '#/projects', '#/blog', '#/post/', '#/contact', '#/others', '#/translation-telephone', '#/shangrila']) {
   assert(indexHtml.includes(legacyHash), `Homepage hash bridge is missing ${legacyHash}`);
 }
 
-const rss = await read(join(dist, 'rss.xml'));
 const publishedCount = posts.filter(({ draft }) => !draft).length;
-assert((rss.match(/<item>/g) ?? []).length === publishedCount, `RSS item count does not match ${publishedCount} published posts`);
+const activeCount = posts.filter(({ draft, archived }) => !draft && !archived).length;
+assert((rss.match(/<item>/g) ?? []).length === activeCount, `RSS item count does not match ${activeCount} active posts`);
 const sitemapIndex = await read(join(dist, 'sitemap-index.xml'));
 assert(sitemapIndex.includes('sitemap-0.xml'), 'Sitemap index does not reference sitemap-0.xml');
 const sitemap = await read(join(dist, 'sitemap-0.xml'));

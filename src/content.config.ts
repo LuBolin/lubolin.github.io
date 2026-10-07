@@ -2,7 +2,8 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-const slug = z.string().regex(/^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/);
+const slug = z.string().regex(/^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/)
+  .refine((value) => value !== 'archive', 'The slug "archive" is reserved for the blog archive.');
 
 const blog = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
@@ -12,6 +13,7 @@ const blog = defineCollection({
     published: z.coerce.date(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    archived: z.boolean().default(false),
     slug,
     updated: z.coerce.date().optional(),
   }),
