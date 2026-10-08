@@ -1,0 +1,60 @@
+@layer theme, base, fold, components, utilities;
+@import url('/fold/assets/index-C94EPPEu.css') layer(fold);
+
+/* Fold owns a renderer and global controls, so this page uses native navigation. */
+body.site-frame { overflow-y: auto; }
+.page-shell.fold-page { width: min(100% - 2rem, 80rem); }
+#app.fold-game {
+  min-height: 0;
+  --ink: var(--color-text);
+  --muted: var(--color-muted);
+  --line: var(--color-border);
+  --paper: var(--color-background);
+  --back: color-mix(in srgb, var(--color-primary) 25%, var(--color-background));
+  --accent: var(--color-primary);
+}
+.fold-game .topbar { padding-inline: 1.25rem; }
+.fold-game .workspace { grid-template-columns: minmax(0, 1fr) 18rem; height: clamp(32rem, 65svh, 46rem); }
+.fold-game .sidebar { padding: 1.25rem; }
+.fold-game :is(.topbar, .sidebar, .objective-strip, .fold-controls, .win-card, .level-dialog) {
+  background: var(--color-surface);
+  border-color: var(--line);
+}
+.fold-game :is(button, select, textarea, .editor-fields input, .polygon-count input, .solution-panel li, .debug-panel pre, #polygon-editor) {
+  background: var(--paper);
+  color: var(--ink);
+}
+.fold-game :is(.icon-button, .text-button, .small-button, .editor-toolbox button, .pack-picker select) { min-height: 2.75rem; }
+.fold-game .icon-button { width: 2.75rem; height: 2.75rem; }
+.fold-game :is(.text-button, .small-button, .editor-toolbox button, .pack-picker, .level-grid strong) { font-size: .8rem; }
+.fold-game :is(.level-copy h2, .editor-sidebar > h2) {
+  margin: .45rem 0 .5rem;
+  color: var(--color-accent);
+  font-size: 1.875rem;
+  line-height: 1.1;
+}
+.fold-game :is(.win-card h2, .dialog-heading h2) { color: var(--color-accent); }
+.fold-game :is(.primary-button, .small-button.primary, .editor-toolbox button.active) {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+.fold-game :is(button:hover, .crease-item.active) { border-color: var(--accent); }
+.fold-game .crease-item.active { background: color-mix(in srgb, var(--accent) 15%, var(--paper)); }
+.fold-game :focus-visible { outline: 3px solid var(--color-accent); outline-offset: 3px; }
+.fold-game .fold-controls { min-width: 0; }
+.fold-game .level-dialog { margin: auto; max-height: calc(100svh - 2rem); border: 1px solid var(--line); }
+
+@media (max-width: 840px) {
+  .fold-game .workspace { grid-template-columns: 1fr; height: auto; }
+  .fold-game .stage { height: 65svh; min-height: 26rem; }
+  .fold-game .sidebar { min-height: 0; }
+}
+@media (max-width: 540px) {
+  .fold-game .topbar { display: flex; flex-wrap: wrap; justify-content: space-between; height: auto; min-height: 4.5rem; padding: .75rem; gap: .5rem; }
+  .fold-game .brand { font-size: 1rem; }
+  .fold-game .brand-mark { width: 1.25rem; height: 1.25rem; }
+  .fold-game .toolbar .text-button { padding-inline: .65rem; }
+  .fold-game .toolbar { margin-left: auto; }
+  .fold-game .toolbar .icon-button { width: 2.75rem; height: 2.75rem; }
+}

@@ -18,7 +18,7 @@ if (root) {
   const languageName = (select: HTMLSelectElement) => select.selectedOptions[0]?.textContent ?? select.value;
   const setStatus = (message: string, error = false) => {
     status.textContent = message;
-    status.classList.toggle('text-red-700', error);
+    status.classList.toggle('text-danger', error);
   };
   const addResult = (label: string, text: string, stabilized = false) => {
     const article = document.createElement('article');

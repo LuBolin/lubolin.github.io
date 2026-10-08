@@ -12,6 +12,7 @@ interface Props {
   robots?: string;
   mainClass?: string;
   canonicalPath?: string;
+  pageTransitions?: boolean;
 }
 
 const {
@@ -21,6 +22,7 @@ const {
   robots,
   mainClass = '',
   canonicalPath = Astro.url.pathname,
+  pageTransitions = true,
 } = Astro.props;
 const pageTitle = title === 'Bloin' ? title : `${title} · Bloin`;
 const canonical = new URL(canonicalPath, Astro.site);
@@ -44,7 +46,7 @@ const isHome = Astro.url.pathname === '/';
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <title>{pageTitle}</title>
-    <ClientRouter />
+    {pageTransitions && <ClientRouter />}
     <script is:inline>
       (() => {
         const resolveTheme = () => {

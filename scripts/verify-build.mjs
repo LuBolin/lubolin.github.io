@@ -36,6 +36,9 @@ assert(experiments.includes('href="/fold/"'), 'Little experiments has no Fold li
 const foldHtml = await read(join(dist, 'fold', 'index.html'));
 assert(foldHtml.includes('src="/fold/assets/'), 'Fold script is missing its /fold/ asset prefix');
 assert(foldHtml.includes('01 / 20'), 'Fold has the wrong level count');
+assert(foldHtml.includes('site-header'), 'Fold is missing the shared site navigation');
+assert(foldHtml.includes('href="/others/"'), 'Fold has no link back to the experiments');
+assert(!foldHtml.includes('astro-view-transitions-enabled'), 'Fold must reload its standalone game on navigation');
 
 const blogHtml = await read(join(dist, 'blog', 'index.html'));
 const archiveHtml = await read(join(dist, 'blog', 'archive', 'index.html'));

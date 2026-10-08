@@ -3,17 +3,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Little experiments" description="Small experiments to play with, made by Bloin.">
-  <div class="page-shell max-w-3xl">
-    <h1 class="page-heading">Little experiments</h1>
-    <p class="page-lede">Small things I made to see what would happen.</p>
-    <div class="card-grid">
-      <a class="project-card ridge-card p-5" href="/fold/" data-astro-reload>
-        <h2 class="m-0 text-2xl leading-tight">Fold</h2>
-        <p class="mb-0 text-muted">Fold the paper to hide the crosses and keep the stars exposed. 20 puzzles, starting with a single fold.</p>
+  <div class="page-shell">
+    <header class="profile-intro">
+      <p class="home-eyebrow">Play & explore</p>
+      <h1>Little experiments</h1>
+      <p>Small things I made to see what would happen.</p>
+    </header>
+    <div class="card-grid mt-6">
+      <a class="project-card ridge-card flex min-w-0 flex-col p-6" href="/shangrila/">
+        <p class="home-eyebrow mt-0">3D world</p>
+        <h2 class="m-0 text-2xl leading-tight text-accent">Shangri-La</h2>
+        <p class="text-muted">Step through the portal and explore a floating island.</p>
+        <span class="mt-auto pt-4 text-primary">Explore Shangri-La →</span>
       </a>
-      <a class="project-card ridge-card p-5" href="/shangrila/">
-        <h2 class="m-0 text-2xl leading-tight">Shangri-La</h2>
-        <p class="mb-0 text-muted">Step through the portal and explore a floating island.</p>
+      <a class="project-card ridge-card flex min-w-0 flex-col p-6" href="/translation-telephone/" data-astro-reload>
+        <p class="home-eyebrow mt-0">Wordplay</p>
+        <h2 class="m-0 text-2xl leading-tight text-accent">Translation Telephone</h2>
+        <p class="text-muted">Translate text back and forth and see what changes.</p>
+        <span class="mt-auto pt-4 text-primary">Try Translation Telephone →</span>
+      </a>
+      <a class="project-card ridge-card flex min-w-0 flex-col p-6" href="/fold/" data-astro-reload>
+        <p class="home-eyebrow mt-0">Paper puzzle</p>
+        <h2 class="m-0 text-2xl leading-tight text-accent">Fold</h2>
+        <p class="text-muted">Fold the paper to hide the crosses and keep the stars exposed. 20 puzzles, starting with a single fold.</p>
+        <span class="mt-auto pt-4 text-primary">Play Fold →</span>
       </a>
     </div>
   </div>

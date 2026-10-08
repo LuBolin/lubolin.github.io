@@ -11,6 +11,7 @@
   --color-accent: #9d704e;
   --color-muted: #6d635a;
   --color-border: #c3ced4;
+  --color-danger: #b34236;
   --font-sans: "ZCOOL KuaiLe", sans-serif;
   --font-serif: "ZCOOL KuaiLe", sans-serif;
 }
@@ -25,6 +26,7 @@ html[data-theme="dark"] {
   --color-accent: #b78660;
   --color-muted: #aa9d8d;
   --color-border: #453f37;
+  --color-danger: #f08d80;
   color-scheme: dark;
 }
 
