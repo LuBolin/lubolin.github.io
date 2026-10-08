@@ -8,11 +8,12 @@ interface Props {
   title: string;
   description: string;
   published: Date;
+  updated?: Date;
   archived?: boolean;
   tags: string[];
   slug: string;
 }
-const { title, description, published, archived = false, tags, slug } = Astro.props;
+const { title, description, published, updated, archived = false, tags, slug } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description} canonicalPath={`/blog/${slug}/`}>
@@ -23,6 +24,9 @@ const { title, description, published, archived = false, tags, slug } = Astro.pr
       <p class="m-0 text-lg">{description}</p>
       <div class="post-meta mt-4">
         <time datetime={published.toISOString()}>{formatDate(published)}</time>
+        {updated && updated.getTime() > published.getTime() && (
+          <span>Updated <time datetime={updated.toISOString()}>{formatDate(updated)}</time></span>
+        )}
         <ul class="tag-list m-0">
           {tags.map((tag) => <li><a class="tag no-underline hover:underline" href={`/tags/${tag.trim().toLowerCase().replace(/\s+/g, '-')}/`}>{tag}</a></li>)}
         </ul>

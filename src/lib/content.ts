@@ -5,7 +5,11 @@ export type Post = CollectionEntry<'blog'>;
 export const publishedPosts = (posts: Post[], archived?: boolean) =>
   posts
     .filter(({ data }) => !data.draft && (archived === undefined || data.archived === archived))
-    .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
+    .sort(
+      (a, b) =>
+        (b.data.updated ?? b.data.published).valueOf() -
+        (a.data.updated ?? a.data.published).valueOf(),
+    );
 
 export const normalizeTag = (tag: string) => tag.trim().toLowerCase().replace(/\s+/g, '-');
 
