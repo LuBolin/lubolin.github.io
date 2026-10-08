@@ -2,10 +2,19 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Other Stuff" description="A quiet doorway to Shangri-La, an interactive 3D experiment by Bloin.">
+<BaseLayout title="Little experiments" description="Small experiments to play with, made by Bloin.">
   <div class="page-shell max-w-3xl">
-    <p class="m-0 text-sm font-bold uppercase tracking-[.15em] text-primary">Other Stuff</p>
-    <h1 class="page-heading mt-2">A doorway travels with you.</h1>
-    <p class="page-lede">Look for the little portal in the corner. It leads to Shangri-La.</p>
+    <h1 class="page-heading">Little experiments</h1>
+    <p class="page-lede">Small things I made to see what would happen.</p>
+    <div class="card-grid">
+      <a class="project-card ridge-card p-5" href="/fold/" data-astro-reload>
+        <h2 class="m-0 text-2xl leading-tight">Fold</h2>
+        <p class="mb-0 text-muted">Fold the paper to hide the crosses and keep the stars exposed. 20 puzzles, starting with a single fold.</p>
+      </a>
+      <a class="project-card ridge-card p-5" href="/shangrila/">
+        <h2 class="m-0 text-2xl leading-tight">Shangri-La</h2>
+        <p class="mb-0 text-muted">Step through the portal and explore a floating island.</p>
+      </a>
+    </div>
   </div>
 </BaseLayout>

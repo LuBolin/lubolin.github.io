@@ -25,11 +25,17 @@ assert(new Set(posts.map(({ slug }) => slug)).size === posts.length, 'Post slugs
 
 const required = [
   'index.html', 'about/index.html', 'projects/index.html', 'blog/index.html', 'contact/index.html',
-  'others/index.html', 'translation-telephone/index.html', 'shangrila/index.html', '404.html', 'rss.xml',
+  'others/index.html', 'fold/index.html', 'translation-telephone/index.html', 'shangrila/index.html', '404.html', 'rss.xml',
   'sitemap-index.xml', 'robots.txt', '.nojekyll',
   'blog/archive/index.html',
 ];
 for (const path of required) assert(await exists(join(dist, path)), `Missing dist/${path}`);
+
+const experiments = await read(join(dist, 'others', 'index.html'));
+assert(experiments.includes('href="/fold/"'), 'Little experiments has no Fold link');
+const foldHtml = await read(join(dist, 'fold', 'index.html'));
+assert(foldHtml.includes('src="/fold/assets/'), 'Fold script is missing its /fold/ asset prefix');
+assert(foldHtml.includes('01 / 20'), 'Fold has the wrong level count');
 
 const blogHtml = await read(join(dist, 'blog', 'index.html'));
 const archiveHtml = await read(join(dist, 'blog', 'archive', 'index.html'));
