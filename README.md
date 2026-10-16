@@ -4,6 +4,13 @@ Hi, I’m Lu Bolin, also known as Bloin. I’m a Computer Science student at the
 
 This site is a home for my projects, blog posts, creative experiments, and other things I make along the way.
 
+## Salary Package Comparer
+
+The card on `/projects/` opens the [live comparer](https://lubolin.github.io/salary-package-comparer/).
+Maintain the tool in [LuBolin/salary-package-comparer](https://github.com/LuBolin/salary-package-comparer).
+GitHub Pages publishes that repository's root on each push to `master`.
+The card's text and thumbnail live in this repository.
+
 ## Fold experiment
 
 The 20-level paper-folding game lives at `/fold/` and is linked from Little experiments.

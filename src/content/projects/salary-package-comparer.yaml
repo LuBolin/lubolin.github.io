@@ -1,0 +1,8 @@
+title: Salary Package Comparer
+url: https://lubolin.github.io/salary-package-comparer/
+image: ../../assets/images/projects/salary-package-comparer.jpg
+imageAlt: Salary package comparison dashboard for Singapore and Shanghai offers
+tags: [Tool, Calculator, JavaScript]
+description:
+  - Compare Singapore and Shanghai salary packages, including taxes, living costs, CPF, and housing-fund contributions.
+context: Available in English and Chinese. Runs in your browser.
