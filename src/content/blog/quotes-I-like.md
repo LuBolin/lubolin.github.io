@@ -20,3 +20,4 @@ slug: quotes-I-like
 # Cute
 - 好样的！！！！！！！我就知道只要活着肯定有好事
 - 真是让朕开了龙眼
+- You can't plan for 9-11, so plan for 7-11
