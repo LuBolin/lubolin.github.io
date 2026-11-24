@@ -58,14 +58,16 @@ const isActive = (href: string) => href === '/' ? path === '/' : path.startsWith
 
 <script>
   const root = document.documentElement;
-  const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
-  const label = toggle?.querySelector<HTMLElement>('[data-theme-label]');
   const syncThemeToggle = () => {
+    const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+    if (!toggle) return;
+
     const dark = root.dataset.theme === 'dark';
-    toggle?.setAttribute('aria-pressed', String(dark));
     const action = dark ? 'Switch to light mode' : 'Switch to dark mode';
-    toggle?.setAttribute('aria-label', action);
-    toggle?.setAttribute('title', action);
+    toggle.setAttribute('aria-pressed', String(dark));
+    toggle.setAttribute('aria-label', action);
+    toggle.title = action;
+    const label = toggle.querySelector('[data-theme-label]');
     if (label) label.textContent = action;
   };
   const syncActiveLink = () => {
@@ -79,8 +81,12 @@ const isActive = (href: string) => href === '/' ? path === '/' : path.startsWith
   };
   syncThemeToggle();
   syncActiveLink();
+  document.addEventListener('astro:after-swap', syncThemeToggle);
   document.addEventListener('astro:after-swap', syncActiveLink);
-  toggle?.addEventListener('click', () => {
+  // The home and inner pages can swap in a new header without rerunning this script.
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element) || !event.target.closest('[data-theme-toggle]')) return;
+
     root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
     try { localStorage.setItem('theme', root.dataset.theme); } catch {}
     syncThemeToggle();

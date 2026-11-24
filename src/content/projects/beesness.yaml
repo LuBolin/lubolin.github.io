@@ -1,17 +1,10 @@
 title: Beesness
 url: https://bolin8621.itch.io/beesness
-links:
-  - label: Itch.io
-    url: https://bolin8621.itch.io/beesness
-  - label: GitLab
-    url: https://gitlab.com/LuBolin/beesness
-  - label: Design Doc
-    url: https://docs.google.com/document/d/14ZhRNz4aNPiHrb_IrKKUwaoefWNj8iUhbQGh_zYCxZU/edit?usp=sharing
 image: ../../assets/images/projects/beesness.jpg
 imageAlt: Beesness
 tags: [Game, Online Multiplayer, Strategy, Unreal Engine]
 description:
-  - Team-vs-team multiplayer strategy game about two rival bee colonies competing to build a hive and win the queen's favour.
-  - Gather nectar, pollen and resin through skill-based minigames, grow your economy, and send swarms to disrupt the other hive.
-  - First to finish constructing their hive — and defend it — wins.
+  - Online 3v3 multiplayer game inspired by Monster Industries
+  - Gather resources to build your hive and send swarms to disrupt the other team
+  - Bots included, for playing without enough players
 context: Made for CS4350, NUS.
