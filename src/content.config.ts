@@ -23,6 +23,7 @@ const projects = defineCollection({
   loader: glob({ pattern: '**/*.{yaml,yml}', base: './src/content/projects' }),
   schema: ({ image }) => z.object({
     title: z.string().min(1),
+    links: z.array(z.object({ label: z.string().min(1), url: z.union([z.url(), z.string().startsWith('/')]) })).default([]),
     url: z.union([z.url(), z.string().startsWith('/')]),
     image: image(),
     imageAlt: z.string().min(1),
